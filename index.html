@@ -111,11 +111,15 @@
       display: none;
     }
 
-    .havent {
-        color: var(--red-light);
-        text-align: center;
-        justify-content: center;
-    }
+    .havent{
+display:block;
+width:100%;
+margin-top:16px;
+text-align:center;
+color:var(--red-light);
+text-decoration:none;
+}
+.havent:hover{text-decoration:underline;}
 
     /* ─── APP ───────────────────────────────────────────────── */
     #app-screen { display: none; min-height: 100vh; flex-direction: column; }
@@ -600,7 +604,7 @@
       }
 
       // 2. Get one email from 'emails' table
-      const emails = await sbFetch(`emails?limit=1`);
+      const emails = await sbFetch(`emails?select=uid,email&order=uid.asc&limit=1`);
 
       if (!emails || emails.length === 0) {
         showToast('Tidak ada email tersedia saat ini. Coba lagi nanti.');
@@ -623,7 +627,7 @@
       currentUser.lastCreated = ts;
 
       // 4. Delete email from supabase
-      await sbFetch(`emails?email=eq.${encodeURIComponent(email)}`, {
+      await sbFetch(`emails?uid=eq.${emailRow.uid}`, {
         method: 'DELETE',
         prefer: 'return=minimal'
       });
@@ -642,6 +646,7 @@
       btn.innerHTML = 'Buat';
 
     } catch (err) {
+      console.error(err);
       showToast('Error: ' + (err.message || 'Terjadi kesalahan.'));
       btn.disabled = false;
       btn.innerHTML = 'Buat';
