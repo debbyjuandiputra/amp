@@ -45,15 +45,12 @@
       max-width: 400px;
     }
 
-    .login-logo {
-      margin-bottom: 32px;
-    }
-
     .login-logo h1 {
       font-size: 28px;
       font-weight: 800;
       letter-spacing: -0.5px;
       color: var(--red);
+      margin-bottom: 28px;
     }
 
     .field { margin-bottom: 18px; }
@@ -111,17 +108,17 @@
       display: none;
     }
 
-    .havent{
-display:block;
-width:100%;
-margin-top:16px;
-text-align:center;
-color:var(--red-light);
-text-decoration:none;
-}
-.havent:hover{text-decoration:underline;}
+    .havent {
+      display: block;
+      width: 100%;
+      margin-top: 16px;
+      text-align: center;
+      color: var(--red-light);
+      text-decoration: none;
+    }
+    .havent:hover { text-decoration: underline; }
 
-    /* ─── APP ───────────────────────────────────────────────── */
+    /* ─── APP USER ───────────────────────────────────────────── */
     #app-screen { display: none; min-height: 100vh; flex-direction: column; }
 
     .topbar {
@@ -226,7 +223,6 @@ text-decoration:none;
       display: none;
     }
 
-    /* ─── RESULT CARD ───────────────────────────────────────── */
     .result-box {
       margin-top: 28px;
       background: var(--gray-100);
@@ -267,7 +263,184 @@ text-decoration:none;
     .btn-copy:hover { background: var(--red); color: white; }
     .btn-copy.copied { background: #27ae60; border-color: #27ae60; color: white; }
 
-    /* ─── TOAST ─────────────────────────────────────────────── */
+    /* ─── ADMIN DASHBOARD ────────────────────────────────────── */
+    #admin-screen {
+      display: none;
+      min-height: 100vh;
+      flex-direction: column;
+    }
+
+    .admin-body {
+      flex: 1;
+      padding: 32px 24px;
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .admin-body h2 {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .admin-body .sub {
+      color: var(--text-soft);
+      font-size: 14px;
+      margin-bottom: 28px;
+    }
+
+    .card {
+      background: var(--white);
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+      padding: 24px;
+      margin-bottom: 28px;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .card-header h3 {
+      font-size: 17px;
+      font-weight: 600;
+    }
+
+    .card-header .badge {
+      background: var(--gray-100);
+      padding: 2px 12px;
+      border-radius: 16px;
+      font-size: 12px;
+      color: var(--text-soft);
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    table th {
+      text-align: left;
+      font-weight: 600;
+      color: var(--text-soft);
+      padding: 10px 8px;
+      border-bottom: 2px solid var(--gray-100);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+
+    table td {
+      padding: 10px 8px;
+      border-bottom: 1px solid var(--gray-100);
+      word-break: break-all;
+    }
+
+    table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .empty-msg {
+      color: var(--gray-500);
+      font-size: 13px;
+      padding: 16px 0;
+      text-align: center;
+    }
+
+    .form-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: flex-end;
+    }
+
+    .form-row .field {
+      margin-bottom: 0;
+      flex: 1 1 180px;
+    }
+
+    .form-row .field label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      color: var(--text-soft);
+      margin-bottom: 4px;
+      display: block;
+    }
+
+    .form-row .field input {
+      padding: 9px 12px;
+      font-size: 14px;
+      border: 1.5px solid var(--gray-300);
+      border-radius: 7px;
+      width: 100%;
+      outline: none;
+      transition: border-color .2s;
+    }
+
+    .form-row .field input:focus {
+      border-color: var(--red);
+    }
+
+    .btn-secondary {
+      background: var(--red);
+      color: white;
+      border: none;
+      border-radius: 7px;
+      padding: 9px 20px;
+      font-weight: 600;
+      font-size: 13px;
+      cursor: pointer;
+      transition: background .2s, transform .1s;
+      white-space: nowrap;
+    }
+
+    .btn-secondary:hover {
+      background: var(--red-dark);
+    }
+    .btn-secondary:active {
+      transform: scale(.97);
+    }
+    .btn-secondary:disabled {
+      background: var(--gray-300);
+      cursor: not-allowed;
+    }
+
+    .btn-danger {
+      background: transparent;
+      color: var(--red);
+      border: 1.5px solid var(--red);
+      border-radius: 6px;
+      padding: 4px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .2s, color .2s;
+    }
+
+    .btn-danger:hover {
+      background: var(--red);
+      color: white;
+    }
+
+    .btn-small {
+      padding: 4px 10px;
+      font-size: 12px;
+      border-radius: 5px;
+    }
+
+    /* ─── TOAST & SPINNER ─────────────────────────────────────── */
     #toast {
       position: fixed;
       bottom: 90px; left: 50%; transform: translateX(-50%) translateY(20px);
@@ -281,31 +454,6 @@ text-decoration:none;
 
     #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-    /* ─── EMAIL FLOATING BUTTON ─────────────────────────────── */
-    .fab-email {
-      position: fixed;
-      bottom: 24px; left: 24px;
-      width: 50px; height: 50px;
-      background: var(--red);
-      color: white;
-      border-radius: 50%;
-      display: none;
-      align-items: center; justify-content: center;
-      text-decoration: none;
-      box-shadow: 0 4px 16px rgba(192,57,43,0.4);
-      transition: background .2s, transform .2s, box-shadow .2s;
-      z-index: 50;
-    }
-
-    .fab-email:hover {
-      background: var(--red-dark);
-      transform: scale(1.08);
-      box-shadow: 0 6px 20px rgba(192,57,43,0.5);
-    }
-
-    .fab-email svg { width: 22px; height: 22px; fill: white; }
-
-    /* ─── SPINNER ────────────────────────────────────────────── */
     .spinner {
       display: inline-block;
       width: 16px; height: 16px;
@@ -323,6 +471,11 @@ text-decoration:none;
     @media (max-width: 480px) {
       .login-card { padding: 36px 24px 28px; }
       .main-card  { padding: 36px 20px; }
+      .admin-body { padding: 20px 16px; }
+      .card { padding: 18px; }
+      .form-row { flex-direction: column; align-items: stretch; }
+      .form-row .field { flex: 1 1 auto; }
+      .card-header { flex-direction: column; align-items: flex-start; }
     }
   </style>
 </head>
@@ -350,7 +503,7 @@ text-decoration:none;
   </div>
 </div>
 
-<!-- ═══════════════ APP ════════════════════════════════════════ -->
+<!-- ═══════════════ APP USER ════════════════════════════════════ -->
 <div id="app-screen">
   <!-- Topbar -->
   <div class="topbar">
@@ -359,9 +512,7 @@ text-decoration:none;
     </div>
     <div class="topbar-right">
       <div class="user-chip" id="user-chip">—</div>
-      <!-- Tombol pintu logout -->
       <button class="btn-logout" onclick="handleLogout()" title="Keluar">
-        <!-- Door / exit icon -->
         <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
           <path d="M10.09 15.59L11.5 17l5-5-5-5-1.41 1.41L12.67 11H3v2h9.67l-2.58 2.59zM19 3H5a2 2 0 0 0-2 2v4h2V5h14v14H5v-4H3v4a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2z"/>
         </svg>
@@ -373,11 +524,8 @@ text-decoration:none;
   <!-- Body -->
   <div class="app-body">
     <div class="main-card">
-
       <button class="btn-buat" id="btn-buat" onclick="handleBuat()">Buat</button>
-
       <div class="cooldown-info" id="cooldown-info"></div>
-
       <div class="result-box" id="result-box">
         <pre id="result-text"></pre>
         <div class="result-actions">
@@ -388,8 +536,95 @@ text-decoration:none;
   </div>
 </div>
 
-<!-- Floating email button (shown after login) -->
-<a class="fab-email" id="fab-email" href="#" title="Hubungi Developer">
+<!-- ═══════════════ ADMIN DASHBOARD ═════════════════════════════ -->
+<div id="admin-screen">
+  <!-- Topbar -->
+  <div class="topbar">
+    <div class="topbar-brand">
+      <strong>AMP</strong>
+      <span>Admin</span>
+    </div>
+    <div class="topbar-right">
+      <div class="user-chip" id="admin-user-chip">admin</div>
+      <button class="btn-logout" onclick="handleLogout()">
+        <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path d="M10.09 15.59L11.5 17l5-5-5-5-1.41 1.41L12.67 11H3v2h9.67l-2.58 2.59zM19 3H5a2 2 0 0 0-2 2v4h2V5h14v14H5v-4H3v4a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2z"/>
+        </svg>
+        Keluar
+      </button>
+    </div>
+  </div>
+
+  <div class="admin-body">
+  <!--   <h2>Dashboard Admin</h2>
+  <p class="sub">Kelola users dan email database.</p> -->
+
+    <!-- USERS -->
+    <div class="card">
+      <div class="card-header">
+        <h3>Users <span class="badge" id="user-count">0</span></h3>
+      </div>
+      <div class="form-row" style="margin-bottom:18px;">
+        <div class="field">
+          <label>Username</label>
+          <input type="text" id="add-user-username" placeholder="username" />
+        </div>
+        <div class="field">
+          <label>Password</label>
+          <input type="text" id="add-user-password" placeholder="password" />
+        </div>
+        <button class="btn-secondary" onclick="handleAddUser()">Tambah User</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>UID</th>
+              <th>Username</th>
+              <th>Password</th>
+              <th>Last Created</th>
+              <th style="text-align:right;">Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="users-table-body">
+            <tr><td colspan="5" class="empty-msg">Memuat data…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- EMAILS -->
+    <div class="card">
+      <div class="card-header">
+        <h3>Emails <span class="badge" id="email-count">0</span></h3>
+      </div>
+      <div class="form-row" style="margin-bottom:18px;">
+        <div class="field">
+          <label>Alamat Email</label>
+          <input type="text" id="add-email-address" placeholder="user@example.com" />
+        </div>
+        <button class="btn-secondary" onclick="handleAddEmail()">Tambah Email</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>UID</th>
+              <th>Email</th>
+              <th style="text-align:right;">Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="emails-table-body">
+            <tr><td colspan="3" class="empty-msg">Memuat data…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Floating email button (user) -->
+<a class="fab-email" id="fab-email" href="#" title="Hubungi Developer" style="display:none;">
   <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
     <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
   </svg>
@@ -402,15 +637,22 @@ text-decoration:none;
   const SUPABASE_URL = "https://lctdgwxvlekxachtnedp.supabase.co";
   const SUPABASE_KEY = "sb_publishable__gbp-AfNa2w4e2h0FUTLfw_18XhTUqJ";
 
-  let currentUser = null; // { uid, username }
+  // ⚠️ GANTI DENGAN SERVICE ROLE KEY DARI DASHBOARD SUPABASE ANDA
+  // Settings → API → Project API keys → service_role
+  const SUPABASE_SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxjdGRnd3h2bGVreGFjaHRuZWRwIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc4NDAyNDExNSwiZXhwIjoyMDk5NjAwMTE1fQ.JCT4XV-O-ddaIm7TRfY0SLy3dQyc2DJWN0W8_qqzXHA"; // <-- GANTI
+
+  const ADMIN_UID = 67676;
+
+  let currentUser = null; // { uid, username, lastCreated }
 
   // ── Supabase REST helper ────────────────────────────────────
-  async function sbFetch(path, options = {}) {
+  async function sbFetch(path, options = {}, useService = false) {
+    const key = useService ? SUPABASE_SERVICE_KEY : SUPABASE_KEY;
     const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
       ...options,
       headers: {
-        "apikey": SUPABASE_KEY,
-        "Authorization": `Bearer ${SUPABASE_KEY}`,
+        "apikey": key,
+        "Authorization": `Bearer ${key}`,
         "Content-Type": "application/json",
         "Prefer": options.prefer || "return=representation",
         ...(options.headers || {})
@@ -445,13 +687,13 @@ text-decoration:none;
     setTimeout(() => t.classList.remove('show'), duration);
   }
 
-  // ── Cooldown check helper ────────────────────────────────────
+  // ── Cooldown helpers (user) ─────────────────────────────────
   function getCooldownMs(lastCreated) {
     if (!lastCreated) return 0;
     const last = new Date(lastCreated).getTime();
     const now  = Date.now();
     const elapsed = now - last;
-    const cooldown = 7 * 60 * 60 * 1000; // 7 jam
+    const cooldown = 7 * 60 * 60 * 1000;
     return Math.max(0, cooldown - elapsed);
   }
 
@@ -485,9 +727,7 @@ text-decoration:none;
     cooldownInterval = setInterval(tick, 1000);
   }
 
-  // ══════════════════════════════════════════════════════════════
-  // LOGIN
-  // ══════════════════════════════════════════════════════════════
+  // ── LOGIN ────────────────────────────────────────────────────
   async function handleLogin() {
     const username = document.getElementById('inp-username').value.trim();
     const password = document.getElementById('inp-password').value;
@@ -516,11 +756,14 @@ text-decoration:none;
       }
 
       const user = rows[0];
-
-      // Update last_created? No — only update on Buat action.
       currentUser = { uid: user.uid, username: user.username, lastCreated: user.last_created };
 
-      showApp();
+      // Cek apakah admin (UID 67676)
+      if (user.uid === ADMIN_UID) {
+        showAdminDashboard();
+      } else {
+        showUserApp();
+      }
 
     } catch (err) {
       errEl.textContent = err.message || 'Terjadi kesalahan, coba lagi.';
@@ -531,19 +774,17 @@ text-decoration:none;
     }
   }
 
-  // Allow Enter key on login inputs
+  // Enter key pada login
   ['inp-username','inp-password'].forEach(id => {
     document.getElementById(id).addEventListener('keydown', e => {
       if (e.key === 'Enter') handleLogin();
     });
   });
 
-  // ══════════════════════════════════════════════════════════════
-  // SHOW / HIDE SCREENS
-  // ══════════════════════════════════════════════════════════════
-  function showApp() {
+  // ── SHOW / HIDE SCREENS ──────────────────────────────────────
+  function showUserApp() {
     document.getElementById('login-screen').style.display = 'none';
-
+    document.getElementById('admin-screen').style.display = 'none';
     const app = document.getElementById('app-screen');
     app.style.display = 'flex';
 
@@ -562,15 +803,34 @@ text-decoration:none;
       startCooldownTimer(remaining);
     }
 
-    // Hide result box
     document.getElementById('result-box').style.display = 'none';
+  }
+
+  function showAdminDashboard() {
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('app-screen').style.display = 'none';
+    const admin = document.getElementById('admin-screen');
+    admin.style.display = 'flex';
+    document.getElementById('admin-user-chip').textContent = currentUser.username;
+
+    // Sembunyikan FAB email (tidak diperlukan untuk admin)
+    document.getElementById('fab-email').style.display = 'none';
+
+    // Load data admin
+    loadUsers();
+    loadEmails();
+    // Auto refresh setiap 10 detik
+    if (window._adminInterval) clearInterval(window._adminInterval);
+    window._adminInterval = setInterval(() => { loadUsers(); loadEmails(); }, 10000);
   }
 
   function handleLogout() {
     currentUser = null;
     clearInterval(cooldownInterval);
+    if (window._adminInterval) clearInterval(window._adminInterval);
 
     document.getElementById('app-screen').style.display  = 'none';
+    document.getElementById('admin-screen').style.display = 'none';
     document.getElementById('login-screen').style.display = 'flex';
     document.getElementById('fab-email').style.display    = 'none';
     document.getElementById('inp-username').value = '';
@@ -582,7 +842,7 @@ text-decoration:none;
   }
 
   // ══════════════════════════════════════════════════════════════
-  // BUAT EMAIL
+  // USER FUNCTIONS (Buat Email)
   // ══════════════════════════════════════════════════════════════
   async function handleBuat() {
     const btn = document.getElementById('btn-buat');
@@ -590,7 +850,6 @@ text-decoration:none;
     btn.innerHTML = '<span class="spinner"></span>Mengambil…';
 
     try {
-      // 1. Re-check cooldown from DB (fresh data)
       const fresh = await sbFetch(`users?uid=eq.${currentUser.uid}&limit=1`);
       if (fresh && fresh[0]) {
         const remaining = getCooldownMs(fresh[0].last_created);
@@ -601,7 +860,6 @@ text-decoration:none;
         }
       }
 
-      // 2. Get one email from 'emails' table
       const emails = await sbFetch(`emails?select=uid,email&order=uid.asc&limit=1`);
 
       if (!emails || emails.length === 0) {
@@ -614,7 +872,6 @@ text-decoration:none;
       const emailRow = emails[0];
       const email = emailRow.email;
 
-      // 3. Update last_created on users table
       const ts = nowGMT7();
       await sbFetch(`users?uid=eq.${currentUser.uid}`, {
         method: 'PATCH',
@@ -624,13 +881,11 @@ text-decoration:none;
 
       currentUser.lastCreated = ts;
 
-      // 4. Delete email from supabase
       await sbFetch(`emails?uid=eq.${emailRow.uid}`, {
         method: 'DELETE',
         prefer: 'return=minimal'
       });
 
-      // 5. Show result
       const resultText =
         `Email: ${email}\nVerifikasi: https://generator.email/${email}\n\nTutorial Login: https://bit.ly/3SQWAE3`;
 
@@ -639,7 +894,6 @@ text-decoration:none;
       document.getElementById('btn-copy').textContent = 'Salin';
       document.getElementById('btn-copy').classList.remove('copied');
 
-      // 6. Start cooldown
       startCooldownTimer(7 * 60 * 60 * 1000);
       btn.innerHTML = 'Buat';
 
@@ -651,9 +905,6 @@ text-decoration:none;
     }
   }
 
-  // ══════════════════════════════════════════════════════════════
-  // COPY
-  // ══════════════════════════════════════════════════════════════
   function handleCopy() {
     const text = document.getElementById('result-text').textContent;
     navigator.clipboard.writeText(text).then(() => {
@@ -666,7 +917,6 @@ text-decoration:none;
         btn.classList.remove('copied');
       }, 2500);
     }).catch(() => {
-      // Fallback
       const ta = document.createElement('textarea');
       ta.value = text;
       document.body.appendChild(ta);
@@ -676,7 +926,155 @@ text-decoration:none;
       showToast('Pesan berhasil disalin!');
     });
   }
+
+  // ══════════════════════════════════════════════════════════════
+  // ADMIN FUNCTIONS (menggunakan Service Role Key)
+  // ══════════════════════════════════════════════════════════════
+  async function loadUsers() {
+    try {
+      const data = await sbFetch(`users?select=*&order=uid.asc`, {}, true); // service role
+      const tbody = document.getElementById('users-table-body');
+      const count = document.getElementById('user-count');
+
+      if (!data || data.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" class="empty-msg">Belum ada user.</td></tr>`;
+        count.textContent = '0';
+        return;
+      }
+
+      count.textContent = data.length;
+      tbody.innerHTML = data.map(u => `
+        <tr>
+          <td><code>${u.uid}</code></td>
+          <td><strong>${u.username}</strong></td>
+          <td>${u.password}</td>
+          <td>${u.last_created ? new Date(u.last_created).toLocaleString('id-ID') : '—'}</td>
+          <td style="text-align:right;">
+            ${u.uid !== ADMIN_UID ? `<button class="btn-danger btn-small" onclick="handleDeleteUser(${u.uid})">Hapus</button>` : '—'}
+          </td>
+        </tr>
+      `).join('');
+    } catch (err) {
+      console.error(err);
+      document.getElementById('users-table-body').innerHTML =
+        `<tr><td colspan="5" class="empty-msg">Gagal memuat users: ${err.message}</td></tr>`;
+    }
+  }
+
+  async function loadEmails() {
+    try {
+      const data = await sbFetch(`emails?select=*&order=uid.asc`, {}, true); // service role
+      const tbody = document.getElementById('emails-table-body');
+      const count = document.getElementById('email-count');
+
+      if (!data || data.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="3" class="empty-msg">Belum ada email.</td></tr>`;
+        count.textContent = '0';
+        return;
+      }
+
+      count.textContent = data.length;
+      tbody.innerHTML = data.map(e => `
+        <tr>
+          <td><code>${e.uid}</code></td>
+          <td>${e.email}</td>
+          <td style="text-align:right;">
+            <button class="btn-danger btn-small" onclick="handleDeleteEmail(${e.uid})">Hapus</button>
+          </td>
+        </tr>
+      `).join('');
+    } catch (err) {
+      console.error(err);
+      document.getElementById('emails-table-body').innerHTML =
+        `<tr><td colspan="3" class="empty-msg">Gagal memuat emails: ${err.message}</td></tr>`;
+    }
+  }
+
+  async function handleAddUser() {
+    const username = document.getElementById('add-user-username').value.trim();
+    const password = document.getElementById('add-user-password').value.trim();
+
+    if (!username || !password) {
+      showToast('Username dan password wajib diisi.');
+      return;
+    }
+
+    const uid = randomUID();
+
+    try {
+      await sbFetch('users', {
+        method: 'POST',
+        body: JSON.stringify({ uid, username, password, last_created: null })
+      }, true); // service role
+
+      document.getElementById('add-user-username').value = '';
+      document.getElementById('add-user-password').value = '';
+      showToast(`User ${username} berhasil ditambahkan (UID: ${uid})`);
+      loadUsers();
+    } catch (err) {
+      showToast('Gagal tambah user: ' + err.message);
+    }
+  }
+
+  async function handleDeleteUser(uid) {
+    if (!confirm(`Hapus user dengan UID ${uid}?`)) return;
+
+    try {
+      await sbFetch(`users?uid=eq.${uid}`, {
+        method: 'DELETE',
+        prefer: 'return=minimal'
+      }, true); // service role
+      showToast(`User ${uid} berhasil dihapus.`);
+      loadUsers();
+    } catch (err) {
+      showToast('Gagal hapus user: ' + err.message);
+    }
+  }
+
+  async function handleAddEmail() {
+    const email = document.getElementById('add-email-address').value.trim();
+
+    if (!email) {
+      showToast('Alamat email wajib diisi.');
+      return;
+    }
+
+    const uid = randomUID();
+
+    try {
+      await sbFetch('emails', {
+        method: 'POST',
+        body: JSON.stringify({ uid, email })
+      }, true); // service role
+
+      document.getElementById('add-email-address').value = '';
+      showToast(`Email ${email} berhasil ditambahkan.`);
+      loadEmails();
+    } catch (err) {
+      showToast('Gagal tambah email: ' + err.message);
+    }
+  }
+
+  async function handleDeleteEmail(uid) {
+    if (!confirm(`Hapus email dengan UID ${uid}?`)) return;
+
+    try {
+      await sbFetch(`emails?uid=eq.${uid}`, {
+        method: 'DELETE',
+        prefer: 'return=minimal'
+      }, true); // service role
+      showToast(`Email ${uid} berhasil dihapus.`);
+      loadEmails();
+    } catch (err) {
+      showToast('Gagal hapus email: ' + err.message);
+    }
+  }
+
+  // ── INIT ──────────────────────────────────────────────────────
+  // Pastikan semua layar tersembunyi, login tampil
+  document.getElementById('app-screen').style.display = 'none';
+  document.getElementById('admin-screen').style.display = 'none';
 </script>
 
 </body>
-</html>
+  </html>
