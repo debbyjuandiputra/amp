@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AMP</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --red:       #C0392B;
+      --red-dark:  #962d22;
+      --red-light: #e74c3c;
+      --white:     #FFFFFF;
+      --off-white: #F9F9F9;
+      --gray-100:  #F2F2F2;
+      --gray-300:  #D0D0D0;
+      --gray-500:  #9E9E9E;
+      --text:      #1A1A1A;
+      --text-soft: #555555;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--off-white);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ─── LOGIN ─────────────────────────────────────────────── */
+    #login-screen {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 24px;
+    }
+
+    .login-card {
+      background: var(--white);
+      border-radius: 16px;
+      box-shadow: 0 4px 32px rgba(0,0,0,0.10);
+      padding: 48px 40px 40px;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .login-logo {
+      margin-bottom: 32px;
+    }
+
+    .login-logo h1 {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: var(--red);
+    }
+
+    .field { margin-bottom: 18px; }
+
+    .field label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-soft);
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      margin-bottom: 6px;
+    }
+
+    .field input {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1.5px solid var(--gray-300);
+      border-radius: 8px;
+      font-size: 15px;
+      color: var(--text);
+      background: var(--white);
+      outline: none;
+      transition: border-color .2s;
+    }
+
+    .field input:focus { border-color: var(--red); }
+
+    .btn-primary {
+      width: 100%;
+      padding: 13px;
+      background: var(--red);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .2s, transform .1s;
+      margin-top: 6px;
+    }
+
+    .btn-primary:hover  { background: var(--red-dark); }
+    .btn-primary:active { transform: scale(.98); }
+    .btn-primary:disabled { background: var(--gray-300); cursor: not-allowed; }
+
+    .login-error {
+      margin-top: 14px;
+      background: #fdecea;
+      border: 1px solid #f5c6c2;
+      color: var(--red-dark);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 13px;
+      display: none;
+    }
+
+    .havent {
+        color: var(--red-light);
+        text-align: center;
+        justify-content: center;
+    }
+
+    /* ─── APP ───────────────────────────────────────────────── */
+    #app-screen { display: none; min-height: 100vh; flex-direction: column; }
+
+    .topbar {
+      background: var(--white);
+      border-bottom: 1px solid var(--gray-100);
+      padding: 0 24px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky; top: 0; z-index: 10;
+    }
+
+    .topbar-brand {
+      display: flex; align-items: center; gap: 8px;
+    }
+
+    .topbar-brand strong {
+      color: var(--red);
+      font-size: 16px; font-weight: 700; letter-spacing: -0.2px;
+    }
+
+    .topbar-right { display: flex; align-items: center; gap: 12px; }
+
+    .user-chip {
+      font-size: 13px; color: var(--text-soft);
+      background: var(--gray-100);
+      padding: 4px 10px; border-radius: 20px;
+    }
+
+    .btn-logout {
+      background: none; border: 1.5px solid var(--gray-300);
+      border-radius: 8px;
+      padding: 6px 10px;
+      cursor: pointer;
+      display: flex; align-items: center; gap: 5px;
+      color: var(--text-soft);
+      font-size: 13px;
+      font-weight: 500;
+      transition: border-color .2s, color .2s, background .2s;
+    }
+
+    .btn-logout:hover {
+      border-color: var(--red);
+      color: var(--red);
+      background: #fdecea;
+    }
+
+    .btn-logout svg { width: 16px; height: 16px; }
+
+    .app-body {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 24px;
+    }
+
+    .main-card {
+      background: var(--white);
+      border-radius: 16px;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.07);
+      padding: 48px 40px;
+      max-width: 480px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .main-card h2 {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .main-card p {
+      font-size: 14px;
+      color: var(--text-soft);
+      margin-bottom: 32px;
+    }
+
+    .btn-buat {
+      padding: 14px 40px;
+      background: var(--red);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background .2s, transform .1s;
+      letter-spacing: 0.3px;
+    }
+
+    .btn-buat:hover  { background: var(--red-dark); }
+    .btn-buat:active { transform: scale(.97); }
+    .btn-buat:disabled { background: var(--gray-300); cursor: not-allowed; }
+
+    .cooldown-info {
+      margin-top: 16px;
+      font-size: 13px;
+      color: var(--gray-500);
+      display: none;
+    }
+
+    /* ─── RESULT CARD ───────────────────────────────────────── */
+    .result-box {
+      margin-top: 28px;
+      background: var(--gray-100);
+      border-radius: 10px;
+      padding: 20px;
+      text-align: left;
+      display: none;
+    }
+
+    .result-box pre {
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      line-height: 1.8;
+      color: var(--text);
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+
+    .result-actions {
+      margin-top: 14px;
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn-copy {
+      flex: 1;
+      padding: 9px;
+      border: 1.5px solid var(--red);
+      background: transparent;
+      color: var(--red);
+      border-radius: 7px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .2s, color .2s;
+    }
+
+    .btn-copy:hover { background: var(--red); color: white; }
+    .btn-copy.copied { background: #27ae60; border-color: #27ae60; color: white; }
+
+    /* ─── TOAST ─────────────────────────────────────────────── */
+    #toast {
+      position: fixed;
+      bottom: 90px; left: 50%; transform: translateX(-50%) translateY(20px);
+      background: #1A1A1A; color: white;
+      padding: 10px 20px; border-radius: 24px;
+      font-size: 13px; font-weight: 500;
+      opacity: 0; transition: opacity .3s, transform .3s;
+      pointer-events: none; z-index: 100;
+      white-space: nowrap;
+    }
+
+    #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    /* ─── EMAIL FLOATING BUTTON ─────────────────────────────── */
+    .fab-email {
+      position: fixed;
+      bottom: 24px; left: 24px;
+      width: 50px; height: 50px;
+      background: var(--red);
+      color: white;
+      border-radius: 50%;
+      display: none;
+      align-items: center; justify-content: center;
+      text-decoration: none;
+      box-shadow: 0 4px 16px rgba(192,57,43,0.4);
+      transition: background .2s, transform .2s, box-shadow .2s;
+      z-index: 50;
+    }
+
+    .fab-email:hover {
+      background: var(--red-dark);
+      transform: scale(1.08);
+      box-shadow: 0 6px 20px rgba(192,57,43,0.5);
+    }
+
+    .fab-email svg { width: 22px; height: 22px; fill: white; }
+
+    /* ─── SPINNER ────────────────────────────────────────────── */
+    .spinner {
+      display: inline-block;
+      width: 16px; height: 16px;
+      border: 2px solid rgba(255,255,255,0.4);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin .7s linear infinite;
+      vertical-align: middle;
+      margin-right: 6px;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ─── RESPONSIVE ─────────────────────────────────────────── */
+    @media (max-width: 480px) {
+      .login-card { padding: 36px 24px 28px; }
+      .main-card  { padding: 36px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════ LOGIN ═══════════════════════════════════════ -->
+<div id="login-screen">
+  <div class="login-card">
+    <div class="login-logo">
+      <h1>AMP</h1>
+    </div>
+
+    <div class="field">
+      <label>Username</label>
+      <input type="text" id="inp-username" placeholder="Masukkan username" autocomplete="username" />
+    </div>
+    <div class="field">
+      <label>Password</label>
+      <input type="password" id="inp-password" placeholder="Masukkan password" autocomplete="current-password" />
+    </div>
+
+    <button class="btn-primary" id="btn-login" onclick="handleLogin()">Masuk</button>
+    <div class="login-error" id="login-error"></div>
+    <a class="havent" href="https://wa.me/6288287091943?text=saya+mau+beli+reseller+am+premium">Belum Punya Akun?</a>
+  </div>
+</div>
+
+<!-- ═══════════════ APP ════════════════════════════════════════ -->
+<div id="app-screen">
+  <!-- Topbar -->
+  <div class="topbar">
+    <div class="topbar-brand">
+      <strong>AMP</strong>
+    </div>
+    <div class="topbar-right">
+      <div class="user-chip" id="user-chip">—</div>
+      <!-- Tombol pintu logout -->
+      <button class="btn-logout" onclick="handleLogout()" title="Keluar">
+        <!-- Door / exit icon -->
+        <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path d="M10.09 15.59L11.5 17l5-5-5-5-1.41 1.41L12.67 11H3v2h9.67l-2.58 2.59zM19 3H5a2 2 0 0 0-2 2v4h2V5h14v14H5v-4H3v4a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2z"/>
+        </svg>
+        Keluar
+      </button>
+    </div>
+  </div>
+
+  <!-- Body -->
+  <div class="app-body">
+    <div class="main-card">
+      <h2>Email Sementara</h2>
+      <p>Klik tombol di bawah untuk mendapatkan alamat email sementara.</p>
+
+      <button class="btn-buat" id="btn-buat" onclick="handleBuat()">Buat</button>
+
+      <div class="cooldown-info" id="cooldown-info"></div>
+
+      <div class="result-box" id="result-box">
+        <pre id="result-text"></pre>
+        <div class="result-actions">
+          <button class="btn-copy" id="btn-copy" onclick="handleCopy()">Salin</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Floating email button (shown after login) -->
+<a class="fab-email" id="fab-email" href="#" title="Hubungi Developer">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+  </svg>
+</a>
+
+<div id="toast"></div>
+
+<!-- ═══════════════ SCRIPT ═════════════════════════════════════ -->
+<script>
+  const SUPABASE_URL = "https://lctdgwxvlekxachtnedp.supabase.co";
+  const SUPABASE_KEY = "sb_publishable__gbp-AfNa2w4e2h0FUTLfw_18XhTUqJ";
+
+  let currentUser = null; // { uid, username }
+
+  // ── Supabase REST helper ────────────────────────────────────
+  async function sbFetch(path, options = {}) {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
+      ...options,
+      headers: {
+        "apikey": SUPABASE_KEY,
+        "Authorization": `Bearer ${SUPABASE_KEY}`,
+        "Content-Type": "application/json",
+        "Prefer": options.prefer || "return=representation",
+        ...(options.headers || {})
+      }
+    });
+
+    const text = await res.text();
+    let data = null;
+    try { data = JSON.parse(text); } catch { data = text; }
+
+    if (!res.ok) throw new Error(data?.message || data || `HTTP ${res.status}`);
+    return data;
+  }
+
+  // ── GMT+7 timestamp ─────────────────────────────────────────
+  function nowGMT7() {
+    const now = new Date();
+    const offset = 7 * 60 * 60 * 1000;
+    return new Date(now.getTime() + offset).toISOString().replace('Z', '+07:00');
+  }
+
+  // ── Random 5-digit UID ──────────────────────────────────────
+  function randomUID() {
+    return Math.floor(10000 + Math.random() * 90000);
+  }
+
+  // ── Toast ───────────────────────────────────────────────────
+  function showToast(msg, duration = 2200) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), duration);
+  }
+
+  // ── Cooldown check helper ────────────────────────────────────
+  function getCooldownMs(lastCreated) {
+    if (!lastCreated) return 0;
+    const last = new Date(lastCreated).getTime();
+    const now  = Date.now();
+    const elapsed = now - last;
+    const cooldown = 7 * 60 * 60 * 1000; // 7 jam
+    return Math.max(0, cooldown - elapsed);
+  }
+
+  function formatCountdown(ms) {
+    const h = Math.floor(ms / 3600000);
+    const m = Math.floor((ms % 3600000) / 60000);
+    const s = Math.floor((ms % 60000) / 1000);
+    return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  }
+
+  let cooldownInterval = null;
+
+  function startCooldownTimer(remainingMs) {
+    const info = document.getElementById('cooldown-info');
+    const btn  = document.getElementById('btn-buat');
+    btn.disabled = true;
+    info.style.display = 'block';
+
+    function tick() {
+      if (remainingMs <= 0) {
+        clearInterval(cooldownInterval);
+        btn.disabled = false;
+        info.style.display = 'none';
+        return;
+      }
+      info.textContent = `⏳ Bisa buat lagi dalam ${formatCountdown(remainingMs)}`;
+      remainingMs -= 1000;
+    }
+
+    tick();
+    cooldownInterval = setInterval(tick, 1000);
+  }
+
+  // ══════════════════════════════════════════════════════════════
+  // LOGIN
+  // ══════════════════════════════════════════════════════════════
+  async function handleLogin() {
+    const username = document.getElementById('inp-username').value.trim();
+    const password = document.getElementById('inp-password').value;
+    const errEl    = document.getElementById('login-error');
+    const btn      = document.getElementById('btn-login');
+
+    errEl.style.display = 'none';
+
+    if (!username || !password) {
+      errEl.textContent = 'Username dan password wajib diisi.';
+      errEl.style.display = 'block';
+      return;
+    }
+
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span>Memproses…';
+
+    try {
+      const rows = await sbFetch(
+        `users?username=eq.${encodeURIComponent(username)}&password=eq.${encodeURIComponent(password)}&limit=1`,
+        { prefer: 'return=representation' }
+      );
+
+      if (!rows || rows.length === 0) {
+        throw new Error('Username atau password salah.');
+      }
+
+      const user = rows[0];
+
+      // Update last_created? No — only update on Buat action.
+      currentUser = { uid: user.uid, username: user.username, lastCreated: user.last_created };
+
+      showApp();
+
+    } catch (err) {
+      errEl.textContent = err.message || 'Terjadi kesalahan, coba lagi.';
+      errEl.style.display = 'block';
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = 'Masuk';
+    }
+  }
+
+  // Allow Enter key on login inputs
+  ['inp-username','inp-password'].forEach(id => {
+    document.getElementById(id).addEventListener('keydown', e => {
+      if (e.key === 'Enter') handleLogin();
+    });
+  });
+
+  // ══════════════════════════════════════════════════════════════
+  // SHOW / HIDE SCREENS
+  // ══════════════════════════════════════════════════════════════
+  function showApp() {
+    document.getElementById('login-screen').style.display = 'none';
+
+    const app = document.getElementById('app-screen');
+    app.style.display = 'flex';
+
+    document.getElementById('user-chip').textContent = currentUser.username;
+
+    // Setup mailto FAB
+    const fab = document.getElementById('fab-email');
+    const subject = encodeURIComponent('Bantuin - Pesan');
+    const body = encodeURIComponent(`UID: ${currentUser.uid}\nPesan: `);
+    fab.href = `mailto:yorpedia.dev@gmail.com?subject=${subject}&body=${body}`;
+    fab.style.display = 'flex';
+
+    // Check cooldown
+    const remaining = getCooldownMs(currentUser.lastCreated);
+    if (remaining > 0) {
+      startCooldownTimer(remaining);
+    }
+
+    // Hide result box
+    document.getElementById('result-box').style.display = 'none';
+  }
+
+  function handleLogout() {
+    currentUser = null;
+    clearInterval(cooldownInterval);
+
+    document.getElementById('app-screen').style.display  = 'none';
+    document.getElementById('login-screen').style.display = 'flex';
+    document.getElementById('fab-email').style.display    = 'none';
+    document.getElementById('inp-username').value = '';
+    document.getElementById('inp-password').value = '';
+    document.getElementById('login-error').style.display  = 'none';
+    document.getElementById('result-box').style.display   = 'none';
+    document.getElementById('btn-buat').disabled = false;
+    document.getElementById('cooldown-info').style.display = 'none';
+  }
+
+  // ══════════════════════════════════════════════════════════════
+  // BUAT EMAIL
+  // ══════════════════════════════════════════════════════════════
+  async function handleBuat() {
+    const btn = document.getElementById('btn-buat');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span>Mengambil…';
+
+    try {
+      // 1. Re-check cooldown from DB (fresh data)
+      const fresh = await sbFetch(`users?uid=eq.${currentUser.uid}&limit=1`);
+      if (fresh && fresh[0]) {
+        const remaining = getCooldownMs(fresh[0].last_created);
+        if (remaining > 0) {
+          startCooldownTimer(remaining);
+          btn.innerHTML = 'Buat';
+          return;
+        }
+      }
+
+      // 2. Get one email from 'emails' table
+      const emails = await sbFetch(`emails?limit=1`);
+
+      if (!emails || emails.length === 0) {
+        showToast('Tidak ada email tersedia saat ini. Coba lagi nanti.');
+        btn.disabled = false;
+        btn.innerHTML = 'Buat';
+        return;
+      }
+
+      const emailRow = emails[0];
+      const email = emailRow.email;
+
+      // 3. Update last_created on users table
+      const ts = nowGMT7();
+      await sbFetch(`users?uid=eq.${currentUser.uid}`, {
+        method: 'PATCH',
+        prefer: 'return=minimal',
+        body: JSON.stringify({ last_created: ts })
+      });
+
+      currentUser.lastCreated = ts;
+
+      // 4. Delete email from supabase
+      await sbFetch(`emails?email=eq.${encodeURIComponent(email)}`, {
+        method: 'DELETE',
+        prefer: 'return=minimal'
+      });
+
+      // 5. Show result
+      const resultText =
+        `Email: ${email}\nVerifikasi: https://generator.email/${email}\n\nTutorial Login: https://bit.ly/3SQWAE3`;
+
+      document.getElementById('result-text').textContent = resultText;
+      document.getElementById('result-box').style.display = 'block';
+      document.getElementById('btn-copy').textContent = 'Salin';
+      document.getElementById('btn-copy').classList.remove('copied');
+
+      // 6. Start cooldown
+      startCooldownTimer(7 * 60 * 60 * 1000);
+      btn.innerHTML = 'Buat';
+
+    } catch (err) {
+      showToast('Error: ' + (err.message || 'Terjadi kesalahan.'));
+      btn.disabled = false;
+      btn.innerHTML = 'Buat';
+    }
+  }
+
+  // ══════════════════════════════════════════════════════════════
+  // COPY
+  // ══════════════════════════════════════════════════════════════
+  function handleCopy() {
+    const text = document.getElementById('result-text').textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      const btn = document.getElementById('btn-copy');
+      btn.textContent = '✓ Tersalin';
+      btn.classList.add('copied');
+      showToast('Pesan berhasil disalin!');
+      setTimeout(() => {
+        btn.textContent = 'Salin';
+        btn.classList.remove('copied');
+      }, 2500);
+    }).catch(() => {
+      // Fallback
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      showToast('Pesan berhasil disalin!');
+    });
+  }
+</script>
+
+</body>
+</html>
