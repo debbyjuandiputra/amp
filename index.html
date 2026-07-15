@@ -810,7 +810,7 @@
 
     // Atur link email di navbar
     const emailLink = document.getElementById('nav-email-link');
-    const subject = encodeURIComponent('Bantuin - Pesan');
+    const subject = encodeURIComponent(' ');
     const body = encodeURIComponent(`UID: ${currentUser.uid}\nPesan: `);
     emailLink.href = `mailto:yorpedia.dev@gmail.com?subject=${subject}&body=${body}`;
     emailLink.style.display = 'inline-flex'; // tampilkan
