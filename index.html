@@ -151,7 +151,6 @@
       padding: 4px 10px; border-radius: 20px;
     }
 
-    /* Link email di navbar (icon) */
     .email-nav-link {
       display: inline-flex;
       align-items: center;
@@ -206,18 +205,6 @@
       max-width: 480px;
       width: 100%;
       text-align: center;
-    }
-
-    .main-card h2 {
-      font-size: 20px;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-
-    .main-card p {
-      font-size: 14px;
-      color: var(--text-soft);
-      margin-bottom: 32px;
     }
 
     .btn-buat {
@@ -297,18 +284,6 @@
       max-width: 1200px;
       margin: 0 auto;
       width: 100%;
-    }
-
-    .admin-body h2 {
-      font-size: 22px;
-      font-weight: 700;
-      margin-bottom: 6px;
-    }
-
-    .admin-body .sub {
-      color: var(--text-soft);
-      font-size: 14px;
-      margin-bottom: 28px;
     }
 
     .card {
@@ -414,6 +389,22 @@
       border-color: var(--red);
     }
 
+    .form-row textarea {
+      padding: 10px;
+      border: 1.5px solid var(--gray-300);
+      border-radius: 7px;
+      width: 100%;
+      font-family: monospace;
+      font-size: 13px;
+      resize: vertical;
+      outline: none;
+      transition: border-color .2s;
+    }
+
+    .form-row textarea:focus {
+      border-color: var(--red);
+    }
+
     .btn-secondary {
       background: var(--red);
       color: white;
@@ -459,6 +450,22 @@
       padding: 4px 10px;
       font-size: 12px;
       border-radius: 5px;
+    }
+
+    .btn-gray {
+      background: var(--gray-300);
+      color: var(--text-soft);
+      border: none;
+      border-radius: 7px;
+      padding: 9px 20px;
+      font-weight: 600;
+      font-size: 13px;
+      cursor: pointer;
+      transition: background .2s;
+    }
+    .btn-gray:hover {
+      background: var(--gray-500);
+      color: white;
     }
 
     /* ─── TOAST & SPINNER ─────────────────────────────────────── */
@@ -526,14 +533,12 @@
 
 <!-- ═══════════════ APP USER ════════════════════════════════════ -->
 <div id="app-screen">
-  <!-- Topbar -->
   <div class="topbar">
     <div class="topbar-brand">
       <strong>AMP</strong>
     </div>
     <div class="topbar-right">
       <div class="user-chip" id="user-chip">—</div>
-      <!-- Link email di navbar (icon) -->
       <a class="email-nav-link" id="nav-email-link" href="#" title="Hubungi Developer">
         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
@@ -548,7 +553,6 @@
     </div>
   </div>
 
-  <!-- Body -->
   <div class="app-body">
     <div class="main-card">
       <button class="btn-buat" id="btn-buat" onclick="handleBuat()">Buat</button>
@@ -565,7 +569,6 @@
 
 <!-- ═══════════════ ADMIN DASHBOARD ═════════════════════════════ -->
 <div id="admin-screen">
-  <!-- Topbar -->
   <div class="topbar">
     <div class="topbar-brand">
       <strong>AMP</strong>
@@ -644,6 +647,41 @@
         </table>
       </div>
     </div>
+
+    <!-- ═══════════════ SQL EXECUTOR (ALL QUERIES) ═════════════════ -->
+    <div class="card">
+      <div class="card-header">
+        <h3>SQL Executor</h3>
+      </div>
+      <div class="form-row" style="margin-bottom:12px; flex-direction:column; align-items:stretch;">
+        <div class="field" style="flex:1;">
+          <label>Query SQL</label>
+          <textarea id="sql-query-input" rows="4" style="width:100%; padding:10px; border:1.5px solid var(--gray-300); border-radius:7px; font-family:monospace; font-size:13px; resize:vertical;"></textarea>
+        </div>
+        <div style="display:flex; gap:16px; margin-top:8px; flex-wrap:wrap; align-items:center;">
+          <button class="btn-secondary" onclick="handleRunQuery()">▶ Run Query</button>
+
+          <label style="display:flex; align-items:center; gap:6px; font-size:13px; cursor:pointer; color:var(--text-soft);">
+            <input type="checkbox" id="sql-danger-mode" />
+            (INSERT,UPDATE,DELETE,DROP)
+          </label>
+
+          <!-- <button class="btn-gray" onclick="document.getElementById('sql-query-input').value='SELECT * FROM users LIMIT 5;';">Contoh Users</button>
+          <button class="btn-gray" onclick="document.getElementById('sql-query-input').value='SELECT * FROM emails LIMIT 5;';">Contoh Emails</button> -->
+        </div>
+      </div>
+
+      <div id="sql-result-area" style="display:none; margin-top:16px; overflow-x:auto;">
+        <table id="sql-result-table">
+          <thead id="sql-result-head"></thead>
+          <tbody id="sql-result-body"></tbody>
+        </table>
+        <div style="margin-top:10px; font-size:12px; color:var(--gray-500);" id="sql-row-count"></div>
+      </div>
+      <div id="sql-error" style="display:none; margin-top:12px; padding:10px; background:#fdecea; border-radius:7px; color:var(--red-dark); font-size:13px;"></div>
+      <div id="sql-success" style="display:none; margin-top:12px; padding:10px; background:#e8f5e9; border-radius:7px; color:#2e7d32; font-size:13px;"></div>
+    </div>
+
   </div>
 </div>
 
@@ -655,13 +693,54 @@
   const SUPABASE_URL = "https://lctdgwxvlekxachtnedp.supabase.co";
   const SUPABASE_KEY = "sb_publishable__gbp-AfNa2w4e2h0FUTLfw_18XhTUqJ";
 
-  // ⚠️ GANTI DENGAN SERVICE ROLE KEY DARI DASHBOARD SUPABASE ANDA
-  // Settings → API → Project API keys → service_role
-  const SUPABASE_SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxjdGRnd3h2bGVreGFjaHRuZWRwIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc4NDAyNDExNSwiZXhwIjoyMDk5NjAwMTE1fQ.JCT4XV-O-ddaIm7TRfY0SLy3dQyc2DJWN0W8_qqzXHA"; // <-- GANTI
+  // ─── SERVICE ROLE KEY ──────────────────────────────────────
+  const SUPABASE_SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxjdGRnd3h2bGVreGFjaHRuZWRwIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc4NDAyNDExNSwiZXhwIjoyMDk5NjAwMTE1fQ.JCT4XV-O-ddaIm7TRfY0SLy3dQyc2DJWN0W8_qqzXHA";
 
+  // ─── TELEGRAM ──────────────────────────────────────────────
+  const BOT_TOKEN = "8781465825:AAGs3cPsfpKASZSyaUIqL6GEjPxyGyWmM78";
+  const CHAT_ID   = "8479227096";
+
+  let lastEmailCountNotified = 0;
+
+  async function sendTelegramNotification(message) {
+    try {
+      const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+      const resp = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ chat_id: CHAT_ID, text: message, parse_mode: "HTML" })
+      });
+      if (!resp.ok) {
+        const err = await resp.text();
+        console.error("Telegram error:", err);
+      }
+    } catch (e) {
+      console.error("Gagal mengirim notifikasi Telegram:", e);
+    }
+  }
+
+  async function checkEmailCountAndNotify() {
+    try {
+      const data = await sbFetch(`emails?select=uid`, {}, true);
+      const count = data ? data.length : 0;
+      if (count === 3 && lastEmailCountNotified !== 3) {
+        await sendTelegramNotification(
+          `⚠️ <b>Email tinggal 3 buah!</b>\nSegera tambahkan email baru agar stok tidak habis.`
+        );
+        lastEmailCountNotified = 3;
+      } else if (count !== 3) {
+        lastEmailCountNotified = 0;
+      }
+      return count;
+    } catch (e) {
+      console.error("Gagal cek jumlah email:", e);
+      return 0;
+    }
+  }
+
+  // ── Konfigurasi ─────────────────────────────────────────────
   const ADMIN_UID = 67676;
-
-  let currentUser = null; // { uid, username, lastCreated }
+  let currentUser = null;
 
   // ── Supabase REST helper ────────────────────────────────────
   async function sbFetch(path, options = {}, useService = false) {
@@ -705,7 +784,7 @@
     setTimeout(() => t.classList.remove('show'), duration);
   }
 
-  // ── Cooldown helpers (user) ─────────────────────────────────
+  // ── Cooldown helpers ────────────────────────────────────────
   function getCooldownMs(lastCreated) {
     if (!lastCreated) return 0;
     const last = new Date(lastCreated).getTime();
@@ -776,10 +855,11 @@
       const user = rows[0];
       currentUser = { uid: user.uid, username: user.username, lastCreated: user.last_created };
 
-      // Cek apakah admin (UID 67676)
       if (user.uid === ADMIN_UID) {
+        await sendTelegramNotification(`🔐 <b>Admin login</b>\nUser: ${user.username} (UID: ${user.uid})`);
         showAdminDashboard();
       } else {
+        await sendTelegramNotification(`👤 <b>User login</b>\nUser: ${user.username} (UID: ${user.uid})`);
         showUserApp();
       }
 
@@ -808,14 +888,12 @@
 
     document.getElementById('user-chip').textContent = currentUser.username;
 
-    // Atur link email di navbar
     const emailLink = document.getElementById('nav-email-link');
-    const subject = encodeURIComponent(' ');
+    const subject = encodeURIComponent('Bantuin - Pesan');
     const body = encodeURIComponent(`UID: ${currentUser.uid}\nPesan: `);
     emailLink.href = `mailto:yorpedia.dev@gmail.com?subject=${subject}&body=${body}`;
-    emailLink.style.display = 'inline-flex'; // tampilkan
+    emailLink.style.display = 'inline-flex';
 
-    // Check cooldown
     const remaining = getCooldownMs(currentUser.lastCreated);
     if (remaining > 0) {
       startCooldownTimer(remaining);
@@ -830,14 +908,10 @@
     const admin = document.getElementById('admin-screen');
     admin.style.display = 'flex';
     document.getElementById('admin-user-chip').textContent = currentUser.username;
-
-    // Sembunyikan link email di navbar (admin tidak perlu)
     document.getElementById('nav-email-link').style.display = 'none';
 
-    // Load data admin
     loadUsers();
     loadEmails();
-    // Auto refresh setiap 10 detik
     if (window._adminInterval) clearInterval(window._adminInterval);
     window._adminInterval = setInterval(() => { loadUsers(); loadEmails(); }, 10000);
   }
@@ -903,6 +977,12 @@
         prefer: 'return=minimal'
       });
 
+      await sendTelegramNotification(
+        `📧 <b>User mengambil email</b>\nUser: ${currentUser.username} (UID: ${currentUser.uid})\nEmail: <code>${email}</code>`
+      );
+
+      await checkEmailCountAndNotify();
+
       const resultText =
         `Email: ${email}\nVerifikasi: https://generator.email/${email}\n\nTutorial Login: https://bit.ly/3SQWAE3`;
 
@@ -945,7 +1025,7 @@
   }
 
   // ══════════════════════════════════════════════════════════════
-  // ADMIN FUNCTIONS (menggunakan Service Role Key)
+  // ADMIN FUNCTIONS
   // ══════════════════════════════════════════════════════════════
   async function loadUsers() {
     try {
@@ -1000,6 +1080,9 @@
           </td>
         </tr>
       `).join('');
+
+      await checkEmailCountAndNotify();
+
     } catch (err) {
       console.error(err);
       document.getElementById('emails-table-body').innerHTML =
@@ -1027,6 +1110,11 @@
       document.getElementById('add-user-username').value = '';
       document.getElementById('add-user-password').value = '';
       showToast(`User ${username} berhasil ditambahkan (UID: ${uid})`);
+
+      await sendTelegramNotification(
+        `➕ <b>Admin menambah user</b>\nAdmin: ${currentUser.username} (UID: ${currentUser.uid})\nUser baru: ${username} (UID: ${uid})`
+      );
+
       loadUsers();
     } catch (err) {
       showToast('Gagal tambah user: ' + err.message);
@@ -1042,6 +1130,11 @@
         prefer: 'return=minimal'
       }, true);
       showToast(`User ${uid} berhasil dihapus.`);
+
+      await sendTelegramNotification(
+        `➖ <b>Admin menghapus user</b>\nAdmin: ${currentUser.username} (UID: ${currentUser.uid})\nUID user dihapus: ${uid}`
+      );
+
       loadUsers();
     } catch (err) {
       showToast('Gagal hapus user: ' + err.message);
@@ -1066,6 +1159,12 @@
 
       document.getElementById('add-email-address').value = '';
       showToast(`Email ${email} berhasil ditambahkan.`);
+
+      await sendTelegramNotification(
+        `📥 <b>Admin menambah email</b>\nAdmin: ${currentUser.username} (UID: ${currentUser.uid})\nEmail baru: <code>${email}</code> (UID: ${uid})`
+      );
+
+      lastEmailCountNotified = 0;
       loadEmails();
     } catch (err) {
       showToast('Gagal tambah email: ' + err.message);
@@ -1081,19 +1180,112 @@
         prefer: 'return=minimal'
       }, true);
       showToast(`Email ${uid} berhasil dihapus.`);
+
+      await sendTelegramNotification(
+        `📤 <b>Admin menghapus email</b>\nAdmin: ${currentUser.username} (UID: ${currentUser.uid})\nUID email dihapus: ${uid}`
+      );
+
       loadEmails();
     } catch (err) {
       showToast('Gagal hapus email: ' + err.message);
     }
   }
 
+  // ─── SQL EXECUTOR (SEMUA QUERY) ──────────────────────────────
+  async function handleRunQuery() {
+    const input = document.getElementById('sql-query-input');
+    const query = input.value.trim();
+    const errorEl = document.getElementById('sql-error');
+    const successEl = document.getElementById('sql-success');
+    const resultArea = document.getElementById('sql-result-area');
+    const tHead = document.getElementById('sql-result-head');
+    const tBody = document.getElementById('sql-result-body');
+    const rowCount = document.getElementById('sql-row-count');
+    const dangerMode = document.getElementById('sql-danger-mode').checked;
+
+    resultArea.style.display = 'none';
+    errorEl.style.display = 'none';
+    successEl.style.display = 'none';
+    errorEl.textContent = '';
+    successEl.textContent = '';
+
+    if (!query) {
+      errorEl.textContent = 'Query tidak boleh kosong.';
+      errorEl.style.display = 'block';
+      return;
+    }
+
+    const isSelect = /^\s*select/i.test(query);
+
+    if (!isSelect && !dangerMode) {
+      errorEl.textContent = 'Query bukan SELECT. Centang "Izinkan query berbahaya" untuk menjalankannya.';
+      errorEl.style.display = 'block';
+      return;
+    }
+
+    if (!isSelect && dangerMode) {
+      const confirmMsg = `ANDA AKAN MENJALANKAN QUERY BERBAHAYA\nYakin ingin melanjutkan?`;
+      if (!confirm(confirmMsg)) {
+        return;
+      }
+    }
+
+    try {
+      const result = await sbFetch('rpc/execute_sql', {
+        method: 'POST',
+        body: JSON.stringify({ query_text: query })
+      }, true);
+
+      if (Array.isArray(result)) {
+        if (result.length === 0) {
+          tHead.innerHTML = '';
+          tBody.innerHTML = '';
+          rowCount.textContent = 'Query berhasil, tetapi tidak ada data.';
+          resultArea.style.display = 'block';
+          return;
+        }
+
+        const headers = Object.keys(result[0]);
+        tHead.innerHTML = `<tr>${headers.map(h => `<th>${h}</th>`).join('')}</tr>`;
+        tBody.innerHTML = result.map(row => `
+          <tr>${headers.map(h => `<td>${row[h] !== null ? row[h] : 'null'}</td>`).join('')}</tr>
+        `).join('');
+
+        rowCount.textContent = `${result.length} baris ditemukan.`;
+        resultArea.style.display = 'block';
+
+      } else if (result && typeof result === 'object') {
+        if (result.status === 'success') {
+          let msg = `${result.message}`;
+          if (result.row_count !== undefined) {
+            msg += ` (${result.row_count} baris terpengaruh)`;
+          }
+          successEl.textContent = msg;
+          successEl.style.display = 'block';
+        } else if (result.status === 'error') {
+          errorEl.textContent = `Error: ${result.message}`;
+          errorEl.style.display = 'block';
+        } else {
+          successEl.textContent = 'Query berhasil dijalankan.';
+          successEl.style.display = 'block';
+        }
+      } else {
+        successEl.textContent = 'Query berhasil dijalankan (tidak ada data kembali).';
+        successEl.style.display = 'block';
+      }
+
+    } catch (err) {
+      console.error(err);
+      errorEl.textContent = `Error: ${err.message || 'Terjadi kesalahan.'}`;
+      errorEl.style.display = 'block';
+    }
+  }
+
   // ── INIT ──────────────────────────────────────────────────────
-  // Pastikan semua layar tersembunyi, login tampil
   document.getElementById('app-screen').style.display = 'none';
   document.getElementById('admin-screen').style.display = 'none';
-  // Sembunyikan link email di navbar saat awal (belum login)
   document.getElementById('nav-email-link').style.display = 'none';
 </script>
 
 </body>
-  </html>
+</html>
