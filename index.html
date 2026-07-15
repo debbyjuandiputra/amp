@@ -141,12 +141,33 @@
       font-size: 16px; font-weight: 700; letter-spacing: -0.2px;
     }
 
-    .topbar-right { display: flex; align-items: center; gap: 12px; }
+    .topbar-right {
+      display: flex; align-items: center; gap: 12px;
+    }
 
     .user-chip {
       font-size: 13px; color: var(--text-soft);
       background: var(--gray-100);
       padding: 4px 10px; border-radius: 20px;
+    }
+
+    /* Link email di navbar (icon) */
+    .email-nav-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-soft);
+      transition: color .2s, transform .2s;
+      text-decoration: none;
+    }
+    .email-nav-link:hover {
+      color: var(--red);
+      transform: scale(1.1);
+    }
+    .email-nav-link svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
     }
 
     .btn-logout {
@@ -512,6 +533,12 @@
     </div>
     <div class="topbar-right">
       <div class="user-chip" id="user-chip">—</div>
+      <!-- Link email di navbar (icon) -->
+      <a class="email-nav-link" id="nav-email-link" href="#" title="Hubungi Developer">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+        </svg>
+      </a>
       <button class="btn-logout" onclick="handleLogout()" title="Keluar">
         <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
           <path d="M10.09 15.59L11.5 17l5-5-5-5-1.41 1.41L12.67 11H3v2h9.67l-2.58 2.59zM19 3H5a2 2 0 0 0-2 2v4h2V5h14v14H5v-4H3v4a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2z"/>
@@ -556,9 +583,6 @@
   </div>
 
   <div class="admin-body">
-  <!--   <h2>Dashboard Admin</h2>
-  <p class="sub">Kelola users dan email database.</p> -->
-
     <!-- USERS -->
     <div class="card">
       <div class="card-header">
@@ -623,13 +647,7 @@
   </div>
 </div>
 
-<!-- Floating email button (user) -->
-<a class="fab-email" id="fab-email" href="#" title="Hubungi Developer" style="display:none;">
-  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-    <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
-  </svg>
-</a>
-
+<!-- Toast -->
 <div id="toast"></div>
 
 <!-- ═══════════════ SCRIPT ═════════════════════════════════════ -->
@@ -790,12 +808,12 @@
 
     document.getElementById('user-chip').textContent = currentUser.username;
 
-    // Setup mailto FAB
-    const fab = document.getElementById('fab-email');
+    // Atur link email di navbar
+    const emailLink = document.getElementById('nav-email-link');
     const subject = encodeURIComponent('Bantuin - Pesan');
     const body = encodeURIComponent(`UID: ${currentUser.uid}\nPesan: `);
-    fab.href = `mailto:yorpedia.dev@gmail.com?subject=${subject}&body=${body}`;
-    fab.style.display = 'flex';
+    emailLink.href = `mailto:yorpedia.dev@gmail.com?subject=${subject}&body=${body}`;
+    emailLink.style.display = 'inline-flex'; // tampilkan
 
     // Check cooldown
     const remaining = getCooldownMs(currentUser.lastCreated);
@@ -813,8 +831,8 @@
     admin.style.display = 'flex';
     document.getElementById('admin-user-chip').textContent = currentUser.username;
 
-    // Sembunyikan FAB email (tidak diperlukan untuk admin)
-    document.getElementById('fab-email').style.display = 'none';
+    // Sembunyikan link email di navbar (admin tidak perlu)
+    document.getElementById('nav-email-link').style.display = 'none';
 
     // Load data admin
     loadUsers();
@@ -832,7 +850,6 @@
     document.getElementById('app-screen').style.display  = 'none';
     document.getElementById('admin-screen').style.display = 'none';
     document.getElementById('login-screen').style.display = 'flex';
-    document.getElementById('fab-email').style.display    = 'none';
     document.getElementById('inp-username').value = '';
     document.getElementById('inp-password').value = '';
     document.getElementById('login-error').style.display  = 'none';
@@ -932,7 +949,7 @@
   // ══════════════════════════════════════════════════════════════
   async function loadUsers() {
     try {
-      const data = await sbFetch(`users?select=*&order=uid.asc`, {}, true); // service role
+      const data = await sbFetch(`users?select=*&order=uid.asc`, {}, true);
       const tbody = document.getElementById('users-table-body');
       const count = document.getElementById('user-count');
 
@@ -963,7 +980,7 @@
 
   async function loadEmails() {
     try {
-      const data = await sbFetch(`emails?select=*&order=uid.asc`, {}, true); // service role
+      const data = await sbFetch(`emails?select=*&order=uid.asc`, {}, true);
       const tbody = document.getElementById('emails-table-body');
       const count = document.getElementById('email-count');
 
@@ -1005,7 +1022,7 @@
       await sbFetch('users', {
         method: 'POST',
         body: JSON.stringify({ uid, username, password, last_created: null })
-      }, true); // service role
+      }, true);
 
       document.getElementById('add-user-username').value = '';
       document.getElementById('add-user-password').value = '';
@@ -1023,7 +1040,7 @@
       await sbFetch(`users?uid=eq.${uid}`, {
         method: 'DELETE',
         prefer: 'return=minimal'
-      }, true); // service role
+      }, true);
       showToast(`User ${uid} berhasil dihapus.`);
       loadUsers();
     } catch (err) {
@@ -1045,7 +1062,7 @@
       await sbFetch('emails', {
         method: 'POST',
         body: JSON.stringify({ uid, email })
-      }, true); // service role
+      }, true);
 
       document.getElementById('add-email-address').value = '';
       showToast(`Email ${email} berhasil ditambahkan.`);
@@ -1062,7 +1079,7 @@
       await sbFetch(`emails?uid=eq.${uid}`, {
         method: 'DELETE',
         prefer: 'return=minimal'
-      }, true); // service role
+      }, true);
       showToast(`Email ${uid} berhasil dihapus.`);
       loadEmails();
     } catch (err) {
@@ -1074,6 +1091,8 @@
   // Pastikan semua layar tersembunyi, login tampil
   document.getElementById('app-screen').style.display = 'none';
   document.getElementById('admin-screen').style.display = 'none';
+  // Sembunyikan link email di navbar saat awal (belum login)
+  document.getElementById('nav-email-link').style.display = 'none';
 </script>
 
 </body>
