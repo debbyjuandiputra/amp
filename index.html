@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
   <title>AMP</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -18,6 +18,7 @@
       --gray-500:  #9E9E9E;
       --text:      #1A1A1A;
       --text-soft: #555555;
+      --gold-dark: #b8860b;
     }
 
     body {
@@ -29,481 +30,256 @@
 
     /* ─── LOGIN ─────────────────────────────────────────────── */
     #login-screen {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      padding: 24px;
+      display: flex; align-items: center; justify-content: center;
+      min-height: 100vh; padding: 24px;
     }
-
     .login-card {
-      background: var(--white);
-      border-radius: 16px;
-      box-shadow: 0 4px 32px rgba(0,0,0,0.10);
-      padding: 48px 40px 40px;
-      width: 100%;
-      max-width: 400px;
+      background: var(--white); border-radius: 16px;
+      box-shadow: 0 4px 32px rgba(0,0,0,0.10); padding: 48px 40px 40px;
+      width: 100%; max-width: 400px;
     }
-
-    .login-logo h1 {
-      font-size: 28px;
-      font-weight: 800;
-      letter-spacing: -0.5px;
-      color: var(--red);
-      margin-bottom: 28px;
-    }
-
+    .login-logo { margin-bottom: 32px; }
+    .login-logo h1 { font-size: 28px; font-weight: 800; letter-spacing: -0.5px; color: var(--red); }
     .field { margin-bottom: 18px; }
-
     .field label {
-      display: block;
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--text-soft);
-      text-transform: uppercase;
-      letter-spacing: 0.6px;
-      margin-bottom: 6px;
+      display: block; font-size: 12px; font-weight: 600; color: var(--text-soft);
+      text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 6px;
     }
-
-    .field input {
-      width: 100%;
-      padding: 11px 14px;
-      border: 1.5px solid var(--gray-300);
-      border-radius: 8px;
-      font-size: 15px;
-      color: var(--text);
-      background: var(--white);
-      outline: none;
-      transition: border-color .2s;
+    .field input, .field select {
+      width: 100%; padding: 11px 14px; border: 1.5px solid var(--gray-300);
+      border-radius: 8px; font-size: 15px; color: var(--text); background: var(--white);
+      outline: none; transition: border-color .2s;
     }
-
-    .field input:focus { border-color: var(--red); }
-
+    .field input:focus, .field select:focus { border-color: var(--red); }
     .btn-primary {
-      width: 100%;
-      padding: 13px;
-      background: var(--red);
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-size: 15px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background .2s, transform .1s;
-      margin-top: 6px;
+      width: 100%; padding: 13px; background: var(--red); color: white;
+      border: none; border-radius: 8px; font-size: 15px; font-weight: 600;
+      cursor: pointer; transition: background .2s, transform .1s; margin-top: 6px;
     }
-
     .btn-primary:hover  { background: var(--red-dark); }
     .btn-primary:active { transform: scale(.98); }
     .btn-primary:disabled { background: var(--gray-300); cursor: not-allowed; }
-
     .login-error {
-      margin-top: 14px;
-      background: #fdecea;
-      border: 1px solid #f5c6c2;
-      color: var(--red-dark);
-      border-radius: 8px;
-      padding: 10px 14px;
-      font-size: 13px;
-      display: none;
+      margin-top: 14px; background: #fdecea; border: 1px solid #f5c6c2;
+      color: var(--red-dark); border-radius: 8px; padding: 10px 14px;
+      font-size: 13px; display: none;
     }
-
     .havent {
-      display: block;
-      width: 100%;
-      margin-top: 16px;
-      text-align: center;
-      color: var(--red-light);
-      text-decoration: none;
+      display: block; width: 100%; margin-top: 16px; text-align: center;
+      color: var(--red-light); text-decoration: none;
     }
     .havent:hover { text-decoration: underline; }
 
-    /* ─── APP USER ───────────────────────────────────────────── */
+    /* ─── APP ───────────────────────────────────────────────── */
     #app-screen { display: none; min-height: 100vh; flex-direction: column; }
-
     .topbar {
-      background: var(--white);
-      border-bottom: 1px solid var(--gray-100);
-      padding: 0 24px;
-      height: 56px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: sticky; top: 0; z-index: 10;
+      background: var(--white); border-bottom: 1px solid var(--gray-100);
+      padding: 0 24px; height: 56px; display: flex; align-items: center;
+      justify-content: space-between; position: sticky; top: 0; z-index: 10;
     }
-
-    .topbar-brand {
-      display: flex; align-items: center; gap: 8px;
-    }
-
-    .topbar-brand strong {
-      color: var(--red);
-      font-size: 16px; font-weight: 700; letter-spacing: -0.2px;
-    }
-
-    .topbar-right {
-      display: flex; align-items: center; gap: 12px;
-    }
-
+    .topbar-left { display: flex; align-items: center; gap: 12px; }
+    .topbar-brand strong { color: var(--red); font-size: 16px; font-weight: 700; }
+    .topbar-right { display: flex; align-items: center; gap: 8px; }
     .user-chip {
-      font-size: 13px; color: var(--text-soft);
-      background: var(--gray-100);
+      font-size: 13px; color: var(--text-soft); background: var(--gray-100);
       padding: 4px 10px; border-radius: 20px;
     }
-
-    .email-nav-link {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--text-soft);
-      transition: color .2s, transform .2s;
-      text-decoration: none;
-    }
-    .email-nav-link:hover {
-      color: var(--red);
-      transform: scale(1.1);
-    }
-    .email-nav-link svg {
-      width: 20px;
-      height: 20px;
-      fill: currentColor;
-    }
-
     .btn-logout {
-      background: none; border: 1.5px solid var(--gray-300);
-      border-radius: 8px;
-      padding: 6px 10px;
-      cursor: pointer;
-      display: flex; align-items: center; gap: 5px;
-      color: var(--text-soft);
-      font-size: 13px;
-      font-weight: 500;
+      background: none; border: 1.5px solid var(--gray-300); border-radius: 8px;
+      padding: 6px 8px; cursor: pointer; display: flex; align-items: center;
+      color: var(--text-soft); font-size: 13px; font-weight: 500;
       transition: border-color .2s, color .2s, background .2s;
     }
+    .btn-logout:hover { border-color: var(--red); color: var(--red); background: #fdecea; }
+    .btn-logout svg { width: 18px; height: 18px; }
 
-    .btn-logout:hover {
-      border-color: var(--red);
-      color: var(--red);
-      background: #fdecea;
+    .btn-nav-ubah {
+      background: none; border: 1.5px solid var(--gray-300); border-radius: 8px;
+      padding: 6px 10px; cursor: pointer; display: flex; align-items: center; gap: 5px;
+      color: var(--text-soft); font-size: 13px; font-weight: 500;
+      transition: border-color .2s, color .2s, background .2s;
     }
-
-    .btn-logout svg { width: 16px; height: 16px; }
+    .btn-nav-ubah:hover { border-color: var(--red); color: var(--red); background: #fdecea; }
+    .btn-nav-ubah svg { width: 16px; height: 16px; }
 
     .app-body {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 40px 24px;
+      flex: 1; display: flex; flex-direction: column; align-items: center;
+      justify-content: flex-start; padding: 40px 24px; gap: 32px;
     }
 
     .main-card {
-      background: var(--white);
-      border-radius: 16px;
-      box-shadow: 0 2px 20px rgba(0,0,0,0.07);
-      padding: 48px 40px;
-      max-width: 480px;
-      width: 100%;
-      text-align: center;
+      background: var(--white); border-radius: 16px; box-shadow: 0 2px 20px rgba(0,0,0,0.07);
+      padding: 48px 40px; max-width: 480px; width: 100%; text-align: center;
     }
-
+    .main-card h2 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
     .btn-buat {
-      padding: 14px 40px;
-      background: var(--red);
-      color: white;
-      border: none;
-      border-radius: 10px;
-      font-size: 16px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: background .2s, transform .1s;
-      letter-spacing: 0.3px;
+      padding: 14px 40px; background: var(--red); color: white; border: none;
+      border-radius: 10px; font-size: 16px; font-weight: 700; cursor: pointer;
+      transition: background .2s, transform .1s; margin-top: 24px;
     }
-
     .btn-buat:hover  { background: var(--red-dark); }
     .btn-buat:active { transform: scale(.97); }
     .btn-buat:disabled { background: var(--gray-300); cursor: not-allowed; }
-
     .cooldown-info {
-      margin-top: 16px;
-      font-size: 13px;
-      color: var(--gray-500);
-      display: none;
+      margin-top: 16px; font-size: 13px; color: var(--gray-500); display: none;
     }
-
     .result-box {
-      margin-top: 28px;
-      background: var(--gray-100);
-      border-radius: 10px;
-      padding: 20px;
-      text-align: left;
-      display: none;
+      margin-top: 28px; background: var(--gray-100); border-radius: 10px;
+      padding: 20px; text-align: left; display: none;
     }
-
     .result-box pre {
-      font-family: 'Courier New', monospace;
-      font-size: 13px;
-      line-height: 1.8;
-      color: var(--text);
-      white-space: pre-wrap;
-      word-break: break-all;
+      font-family: 'Courier New', monospace; font-size: 13px; line-height: 1.8;
+      color: var(--text); white-space: pre-wrap; word-break: break-all;
     }
-
-    .result-actions {
-      margin-top: 14px;
-      display: flex;
-      gap: 8px;
-    }
-
+    .result-actions { margin-top: 14px; display: flex; gap: 8px; }
     .btn-copy {
-      flex: 1;
-      padding: 9px;
-      border: 1.5px solid var(--red);
-      background: transparent;
-      color: var(--red);
-      border-radius: 7px;
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background .2s, color .2s;
+      flex: 1; padding: 9px; border: 1.5px solid var(--red); background: transparent;
+      color: var(--red); border-radius: 7px; font-size: 13px; font-weight: 600;
+      cursor: pointer; transition: background .2s, color .2s;
     }
-
     .btn-copy:hover { background: var(--red); color: white; }
     .btn-copy.copied { background: #27ae60; border-color: #27ae60; color: white; }
 
-    /* ─── ADMIN DASHBOARD ────────────────────────────────────── */
-    #admin-screen {
-      display: none;
-      min-height: 100vh;
-      flex-direction: column;
+    /* ─── PURCHASE CARD ─────────────────────────────────────── */
+    .purchase-card {
+      background: var(--white); border-radius: 16px; box-shadow: 0 2px 20px rgba(0,0,0,0.07);
+      padding: 30px 40px; max-width: 480px; width: 100%; text-align: center;
     }
+    .purchase-card h3 { font-size: 18px; margin-bottom: 16px; }
+    .btn-small {
+      padding: 10px 16px; background: var(--red); color: white; border: none;
+      border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 13px;
+      margin: 0 4px;
+    }
+    .btn-small:hover { background: var(--red-dark); }
+    .btn-small:disabled { background: var(--gray-300); }
 
-    .admin-body {
-      flex: 1;
-      padding: 32px 24px;
-      max-width: 1200px;
-      margin: 0 auto;
-      width: 100%;
+    /* ─── PANEL (Admin & Owner) ──────────────────────────────── */
+    .panel {
+      background: var(--white); border-radius: 16px; box-shadow: 0 2px 20px rgba(0,0,0,0.07);
+      padding: 32px; max-width: 800px; width: 100%;
     }
+    .panel h2 { font-size: 20px; margin-bottom: 16px; }
 
     .card {
-      background: var(--white);
-      border-radius: 12px;
-      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
-      padding: 24px;
-      margin-bottom: 28px;
+      background: var(--white); border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      margin-bottom: 24px; padding: 24px;
     }
-
     .card-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-bottom: 18px;
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 16px;
     }
-
-    .card-header h3 {
-      font-size: 17px;
-      font-weight: 600;
+    .card-header h3 { font-size: 16px; font-weight: 600; }
+    .badge {
+      background: var(--red); color: white; border-radius: 12px;
+      padding: 2px 8px; font-size: 12px; font-weight: 600;
     }
-
-    .card-header .badge {
-      background: var(--gray-100);
-      padding: 2px 12px;
-      border-radius: 16px;
-      font-size: 12px;
-      color: var(--text-soft);
-    }
-
-    .table-wrap {
-      overflow-x: auto;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 14px;
-    }
-
-    table th {
-      text-align: left;
-      font-weight: 600;
-      color: var(--text-soft);
-      padding: 10px 8px;
-      border-bottom: 2px solid var(--gray-100);
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.4px;
-    }
-
-    table td {
-      padding: 10px 8px;
-      border-bottom: 1px solid var(--gray-100);
-      word-break: break-all;
-    }
-
-    table tr:last-child td {
-      border-bottom: none;
-    }
-
-    .empty-msg {
-      color: var(--gray-500);
-      font-size: 13px;
-      padding: 16px 0;
-      text-align: center;
-    }
-
     .form-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      align-items: flex-end;
+      display: flex; gap: 8px; align-items: flex-end; flex-wrap: wrap;
     }
-
-    .form-row .field {
-      margin-bottom: 0;
-      flex: 1 1 180px;
-    }
-
-    .form-row .field label {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.4px;
-      color: var(--text-soft);
-      margin-bottom: 4px;
-      display: block;
-    }
-
-    .form-row .field input {
-      padding: 9px 12px;
-      font-size: 14px;
-      border: 1.5px solid var(--gray-300);
-      border-radius: 7px;
-      width: 100%;
-      outline: none;
-      transition: border-color .2s;
-    }
-
-    .form-row .field input:focus {
-      border-color: var(--red);
-    }
-
-    .form-row textarea {
-      padding: 10px;
-      border: 1.5px solid var(--gray-300);
-      border-radius: 7px;
-      width: 100%;
-      font-family: monospace;
-      font-size: 13px;
-      resize: vertical;
-      outline: none;
-      transition: border-color .2s;
-    }
-
-    .form-row textarea:focus {
-      border-color: var(--red);
-    }
-
+    .form-row .field { flex: 1; min-width: 120px; margin-bottom: 0; }
     .btn-secondary {
-      background: var(--red);
-      color: white;
-      border: none;
-      border-radius: 7px;
-      padding: 9px 20px;
-      font-weight: 600;
-      font-size: 13px;
-      cursor: pointer;
-      transition: background .2s, transform .1s;
-      white-space: nowrap;
+      padding: 10px 16px; background: var(--red); color: white; border: none;
+      border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 13px;
     }
-
-    .btn-secondary:hover {
-      background: var(--red-dark);
-    }
-    .btn-secondary:active {
-      transform: scale(.97);
-    }
-    .btn-secondary:disabled {
-      background: var(--gray-300);
-      cursor: not-allowed;
-    }
-
-    .btn-danger {
-      background: transparent;
-      color: var(--red);
-      border: 1.5px solid var(--red);
-      border-radius: 6px;
-      padding: 4px 12px;
-      font-size: 12px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background .2s, color .2s;
-    }
-
-    .btn-danger:hover {
-      background: var(--red);
-      color: white;
-    }
-
-    .btn-small {
-      padding: 4px 10px;
-      font-size: 12px;
-      border-radius: 5px;
-    }
-
+    .btn-secondary:hover { background: var(--red-dark); }
     .btn-gray {
-      background: var(--gray-300);
-      color: var(--text-soft);
-      border: none;
-      border-radius: 7px;
-      padding: 9px 20px;
-      font-weight: 600;
-      font-size: 13px;
-      cursor: pointer;
-      transition: background .2s;
+      padding: 8px 14px; background: var(--gray-100); color: var(--text);
+      border: 1px solid var(--gray-300); border-radius: 8px;
+      font-size: 13px; cursor: pointer;
     }
-    .btn-gray:hover {
-      background: var(--gray-500);
-      color: white;
-    }
+    .btn-gray:hover { background: var(--gray-300); }
 
-    /* ─── TOAST & SPINNER ─────────────────────────────────────── */
+    .table-wrap { overflow-x: auto; }
+    table {
+      width: 100%; border-collapse: collapse; font-size: 13px;
+    }
+    table th, table td {
+      border-bottom: 1px solid var(--gray-100); padding: 10px 8px; text-align: left;
+    }
+    table th { font-weight: 600; color: var(--text-soft); }
+    .username-admin { color: var(--gold-dark); font-weight: 600; }
+    .username-owner { color: var(--gold-dark); font-weight: 800; }
+    .empty-msg { text-align: center; color: var(--gray-500); padding: 16px; }
+
+    .btn-delete {
+      background: none; border: 1px solid var(--red); border-radius: 6px;
+      padding: 4px 6px; cursor: pointer; color: var(--red);
+      display: inline-flex; align-items: center; justify-content: center;
+      transition: background 0.2s, color 0.2s;
+    }
+    .btn-delete:hover { background: var(--red); color: white; }
+    .btn-delete svg { width: 16px; height: 16px; }
+
+    /* ─── TOAST ─────────────────────────────────────────────── */
     #toast {
-      position: fixed;
-      bottom: 90px; left: 50%; transform: translateX(-50%) translateY(20px);
-      background: #1A1A1A; color: white;
-      padding: 10px 20px; border-radius: 24px;
-      font-size: 13px; font-weight: 500;
-      opacity: 0; transition: opacity .3s, transform .3s;
-      pointer-events: none; z-index: 100;
-      white-space: nowrap;
+      position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%) translateY(20px);
+      background: #1A1A1A; color: white; padding: 10px 20px; border-radius: 24px;
+      font-size: 13px; font-weight: 500; opacity: 0; transition: opacity .3s, transform .3s;
+      pointer-events: none; z-index: 100; white-space: nowrap;
     }
-
     #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-    .spinner {
-      display: inline-block;
-      width: 16px; height: 16px;
-      border: 2px solid rgba(255,255,255,0.4);
-      border-top-color: white;
-      border-radius: 50%;
-      animation: spin .7s linear infinite;
-      vertical-align: middle;
-      margin-right: 6px;
+    /* ─── FLOATING BUTTONS ──────────────────────────────────── */
+    .fab-email, .fab-wa {
+      position: fixed; left: 24px; width: 50px; height: 50px;
+      color: white; border-radius: 50%; display: none;
+      align-items: center; justify-content: center; text-decoration: none;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+      transition: background .2s, transform .2s;
+      z-index: 50;
     }
+    .fab-wa {
+      background: #25D366;
+      bottom: 88px;
+    }
+    .fab-wa:hover { background: #1da851; transform: scale(1.08); }
+    .fab-wa svg { width: 24px; height: 24px; fill: white; }
 
+    .fab-email {
+      background: var(--red);
+      bottom: 24px;
+    }
+    .fab-email:hover { background: var(--red-dark); transform: scale(1.08); }
+    .fab-email svg { width: 22px; height: 22px; fill: white; }
+
+    /* ─── MODAL ─────────────────────────────────────────────── */
+    .modal-backdrop {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5); display: none; align-items: center;
+      justify-content: center; z-index: 200;
+    }
+    .modal {
+      background: white; border-radius: 16px; padding: 32px; max-width: 360px;
+      width: 90%; text-align: center; box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+      animation: modalIn .25s ease;
+    }
+    @keyframes modalIn { from { opacity: 0; transform: translateY(20px); } }
+    .modal img { max-width: 200px; margin: 16px 0; }
+    .modal .modal-buttons { display: flex; gap: 8px; margin-top: 16px; justify-content: center; }
+    .modal .btn-confirm {
+      background: var(--red); color: white; border: none; padding: 10px 20px;
+      border-radius: 8px; font-weight: 600; cursor: pointer;
+    }
+    .modal .btn-cancel {
+      background: transparent; border: 1.5px solid var(--gray-300); padding: 10px 20px;
+      border-radius: 8px; cursor: pointer; font-weight: 600;
+    }
+    .modal .btn-confirm:disabled { background: var(--gray-300); cursor: not-allowed; }
+
+    .spinner {
+      display: inline-block; width: 16px; height: 16px;
+      border: 2px solid rgba(255,255,255,0.4); border-top-color: white;
+      border-radius: 50%; animation: spin .7s linear infinite;
+      vertical-align: middle; margin-right: 6px;
+    }
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* ─── RESPONSIVE ─────────────────────────────────────────── */
     @media (max-width: 480px) {
       .login-card { padding: 36px 24px 28px; }
       .main-card  { padding: 36px 20px; }
-      .admin-body { padding: 20px 16px; }
-      .card { padding: 18px; }
-      .form-row { flex-direction: column; align-items: stretch; }
-      .form-row .field { flex: 1 1 auto; }
-      .card-header { flex-direction: column; align-items: flex-start; }
+      .panel { padding: 24px 16px; }
     }
   </style>
 </head>
@@ -512,10 +288,7 @@
 <!-- ═══════════════ LOGIN ═══════════════════════════════════════ -->
 <div id="login-screen">
   <div class="login-card">
-    <div class="login-logo">
-      <h1>AMP</h1>
-    </div>
-
+    <div class="login-logo"><h1>AMP</h1></div>
     <div class="field">
       <label>Username</label>
       <input type="text" id="inp-username" placeholder="Masukkan username" autocomplete="username" />
@@ -524,37 +297,34 @@
       <label>Password</label>
       <input type="password" id="inp-password" placeholder="Masukkan password" autocomplete="current-password" />
     </div>
-
     <button class="btn-primary" id="btn-login" onclick="handleLogin()">Masuk</button>
     <div class="login-error" id="login-error"></div>
     <a class="havent" href="https://wa.me/6288287091943?text=saya+mau+beli+reseller+am+premium">Belum Punya Akun?</a>
   </div>
 </div>
 
-<!-- ═══════════════ APP USER ════════════════════════════════════ -->
+<!-- ═══════════════ APP ════════════════════════════════════════ -->
 <div id="app-screen">
   <div class="topbar">
-    <div class="topbar-brand">
-      <strong>AMP</strong>
+    <div class="topbar-left">
+      <div class="topbar-brand"><strong>AMP</strong></div>
+      <div class="user-chip" id="user-chip">—</div>
     </div>
     <div class="topbar-right">
-      <div class="user-chip" id="user-chip">—</div>
-      <a class="email-nav-link" id="nav-email-link" href="#" title="Hubungi Developer">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
-        </svg>
-      </a>
+      <button class="btn-nav-ubah" id="btn-nav-ubah" onclick="showChangePasswordModal()" style="display:none;">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1s3.1 1.39 3.1 3.1v2z"/></svg>
+        Ubah Password
+      </button>
       <button class="btn-logout" onclick="handleLogout()" title="Keluar">
-        <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-          <path d="M10.09 15.59L11.5 17l5-5-5-5-1.41 1.41L12.67 11H3v2h9.67l-2.58 2.59zM19 3H5a2 2 0 0 0-2 2v4h2V5h14v14H5v-4H3v4a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2z"/>
-        </svg>
-        Keluar
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10.09 15.59L11.5 17l5-5-5-5-1.41 1.41L12.67 11H3v2h9.67l-2.58 2.59zM19 3H5a2 2 0 0 0-2 2v4h2V5h14v14H5v-4H3v4a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2z"/></svg>
       </button>
     </div>
   </div>
 
   <div class="app-body">
-    <div class="main-card">
+    <!-- Card Buat Email -->
+    <div class="main-card" id="main-card">
+      <h2>Alight Motion</h2>
       <button class="btn-buat" id="btn-buat" onclick="handleBuat()">Buat</button>
       <div class="cooldown-info" id="cooldown-info"></div>
       <div class="result-box" id="result-box">
@@ -564,219 +334,228 @@
         </div>
       </div>
     </div>
+
+    <!-- Card Pembelian -->
+    <div class="purchase-card" id="purchase-card" style="display:none;">
+      <h3>Pembelian</h3>
+      <button class="btn-small" id="btn-beli-method" onclick="beliMethod()">Beli Method</button>
+      <button class="btn-small" id="btn-beli-admin" onclick="beliAdmin()">Beli Admin</button>
+    </div>
+
+    <!-- Admin Panel (role=1) -->
+    <div class="panel" id="admin-panel" style="display:none;">
+      <h2>Admin Panel</h2>
+      <div class="admin-info" id="admin-info">Sisa hari : ... | Limit tambah : 3/24 jam</div>
+      <table>
+        <thead><tr><th>Username</th><th>Berakhir</th><th>Hapus</th></tr></thead>
+        <tbody id="admin-user-list"></tbody>
+      </table>
+      <div class="form-row" style="margin-bottom:18px;">
+        <div class="field"><label>Username</label><input type="text" id="new-username" placeholder="user baru" /></div>
+        <div class="field"><label>Password</label><input type="password" id="new-password" placeholder="password" /></div>
+        <div class="field"><label>Hari</label><input type="number" id="new-days" min="1" value="1" style="width:70px;" /></div>
+        <button class="btn-secondary" onclick="addUser()">Tambah</button>
+      </div>
+    </div>
+
+    <!-- Owner Panel (role=2) -->
+    <div class="panel" id="owner-panel" style="display:none;">
+      <!-- USERS -->
+      <div class="card">
+        <div class="card-header">
+          <h3>Users <span class="badge" id="owner-user-count">0</span></h3>
+        </div>
+        <div class="form-row" style="margin-bottom:18px;">
+          <div class="field">
+            <label>Username</label>
+            <input type="text" id="add-user-username" placeholder="username" />
+          </div>
+          <div class="field">
+            <label>Password</label>
+            <input type="text" id="add-user-password" placeholder="password" />
+          </div>
+          <div class="field">
+            <label>Role</label>
+            <select id="add-user-role">
+              <option value="0">Biasa</option>
+              <option value="1">Admin</option>
+              <option value="2">Owner</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Hari</label>
+            <input type="number" id="add-user-days" min="1" value="1" style="width:70px;" />
+          </div>
+          <button class="btn-secondary" onclick="ownerAddUser()">Tambah User</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>UID</th>
+                <th>Username</th>
+                <th>Password</th>
+                <th>Berakhir</th>
+                <th>Hapus</th>
+              </tr>
+            </thead>
+            <tbody id="owner-users-table-body">
+              <tr><td colspan="5" class="empty-msg">Memuat data…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- EMAILS -->
+      <div class="card">
+        <div class="card-header">
+          <h3>Emails <span class="badge" id="owner-email-count">0</span></h3>
+        </div>
+        <div class="form-row" style="margin-bottom:18px;">
+          <div class="field">
+            <label>Alamat Email</label>
+            <input type="text" id="add-email-address" placeholder="user@example.com" />
+          </div>
+          <button class="btn-secondary" onclick="ownerAddEmail()">Tambah Email</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>UID</th>
+                <th>Email</th>
+                <th>Hapus</th>
+              </tr>
+            </thead>
+            <tbody id="owner-emails-table-body">
+              <tr><td colspan="3" class="empty-msg">Memuat data…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- SQL EXECUTOR -->
+      <div class="card">
+        <div class="card-header">
+          <h3>SQL Executor</h3>
+        </div>
+        <div class="form-row" style="flex-direction:column; align-items:stretch;">
+          <div class="field" style="flex:1;">
+            <label>Query SQL</label>
+            <textarea id="sql-query-input" rows="4" style="width:100%; padding:10px; border:1.5px solid var(--gray-300); border-radius:7px; font-family:monospace; font-size:13px; resize:vertical;"></textarea>
+          </div>
+          <div style="display:flex; gap:16px; margin-top:8px; flex-wrap:wrap; align-items:center;">
+            <button class="btn-secondary" onclick="ownerRunQuery()">▶ Run Query</button>
+            <label style="display:flex; align-items:center; gap:6px; font-size:13px; cursor:pointer; color:var(--text-soft);">
+              <input type="checkbox" id="sql-danger-mode" />
+              (INSERT,UPDATE,DELETE,DROP)
+            </label>
+          </div>
+        </div>
+        <div id="sql-result-area" style="display:none; margin-top:16px; overflow-x:auto;">
+          <table id="sql-result-table">
+            <thead id="sql-result-head"></thead>
+            <tbody id="sql-result-body"></tbody>
+          </table>
+          <div style="margin-top:10px; font-size:12px; color:var(--gray-500);" id="sql-row-count"></div>
+        </div>
+        <div id="sql-error" style="display:none; margin-top:12px; padding:10px; background:#fdecea; border-radius:7px; color:var(--red-dark); font-size:13px;"></div>
+        <div id="sql-success" style="display:none; margin-top:12px; padding:10px; background:#e8f5e9; border-radius:7px; color:#2e7d32; font-size:13px;"></div>
+      </div>
+
+      <div id="owner-email-placeholder" style="display:flex; justify-content:center;"></div>
+    </div>
   </div>
 </div>
 
-<!-- ═══════════════ ADMIN DASHBOARD ═════════════════════════════ -->
-<div id="admin-screen">
-  <div class="topbar">
-    <div class="topbar-brand">
-      <strong>AMP</strong>
-      <span>Admin</span>
-    </div>
-    <div class="topbar-right">
-      <div class="user-chip" id="admin-user-chip">admin</div>
-      <button class="btn-logout" onclick="handleLogout()">
-        <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-          <path d="M10.09 15.59L11.5 17l5-5-5-5-1.41 1.41L12.67 11H3v2h9.67l-2.58 2.59zM19 3H5a2 2 0 0 0-2 2v4h2V5h14v14H5v-4H3v4a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2z"/>
-        </svg>
-        Keluar
-      </button>
-    </div>
-  </div>
+<!-- Floating buttons -->
+<a class="fab-wa" id="fab-wa" href="https://wa.me/6288287091943" target="_blank" title="WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+</a>
+<a class="fab-email" id="fab-email" href="#" title="Hubungi Developer">
+  <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+</a>
 
-  <div class="admin-body">
-    <!-- USERS -->
-    <div class="card">
-      <div class="card-header">
-        <h3>Users <span class="badge" id="user-count">0</span></h3>
-      </div>
-      <div class="form-row" style="margin-bottom:18px;">
-        <div class="field">
-          <label>Username</label>
-          <input type="text" id="add-user-username" placeholder="username" />
-        </div>
-        <div class="field">
-          <label>Password</label>
-          <input type="text" id="add-user-password" placeholder="password" />
-        </div>
-        <button class="btn-secondary" onclick="handleAddUser()">Tambah User</button>
-      </div>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>UID</th>
-              <th>Username</th>
-              <th>Password</th>
-              <th>Last Created</th>
-              <th style="text-align:right;">Aksi</th>
-            </tr>
-          </thead>
-          <tbody id="users-table-body">
-            <tr><td colspan="5" class="empty-msg">Memuat data…</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- EMAILS -->
-    <div class="card">
-      <div class="card-header">
-        <h3>Emails <span class="badge" id="email-count">0</span></h3>
-      </div>
-      <div class="form-row" style="margin-bottom:18px;">
-        <div class="field">
-          <label>Alamat Email</label>
-          <input type="text" id="add-email-address" placeholder="user@example.com" />
-        </div>
-        <button class="btn-secondary" onclick="handleAddEmail()">Tambah Email</button>
-      </div>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>UID</th>
-              <th>Email</th>
-              <th style="text-align:right;">Aksi</th>
-            </tr>
-          </thead>
-          <tbody id="emails-table-body">
-            <tr><td colspan="3" class="empty-msg">Memuat data…</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- ═══════════════ SQL EXECUTOR (ALL QUERIES) ═════════════════ -->
-    <div class="card">
-      <div class="card-header">
-        <h3>SQL Executor</h3>
-      </div>
-      <div class="form-row" style="margin-bottom:12px; flex-direction:column; align-items:stretch;">
-        <div class="field" style="flex:1;">
-          <label>Query SQL</label>
-          <textarea id="sql-query-input" rows="4" style="width:100%; padding:10px; border:1.5px solid var(--gray-300); border-radius:7px; font-family:monospace; font-size:13px; resize:vertical;"></textarea>
-        </div>
-        <div style="display:flex; gap:16px; margin-top:8px; flex-wrap:wrap; align-items:center;">
-          <button class="btn-secondary" onclick="handleRunQuery()">▶ Run Query</button>
-
-          <label style="display:flex; align-items:center; gap:6px; font-size:13px; cursor:pointer; color:var(--text-soft);">
-            <input type="checkbox" id="sql-danger-mode" />
-            (INSERT,UPDATE,DELETE,DROP)
-          </label>
-
-          <!-- <button class="btn-gray" onclick="document.getElementById('sql-query-input').value='SELECT * FROM users LIMIT 5;';">Contoh Users</button>
-          <button class="btn-gray" onclick="document.getElementById('sql-query-input').value='SELECT * FROM emails LIMIT 5;';">Contoh Emails</button> -->
-        </div>
-      </div>
-
-      <div id="sql-result-area" style="display:none; margin-top:16px; overflow-x:auto;">
-        <table id="sql-result-table">
-          <thead id="sql-result-head"></thead>
-          <tbody id="sql-result-body"></tbody>
-        </table>
-        <div style="margin-top:10px; font-size:12px; color:var(--gray-500);" id="sql-row-count"></div>
-      </div>
-      <div id="sql-error" style="display:none; margin-top:12px; padding:10px; background:#fdecea; border-radius:7px; color:var(--red-dark); font-size:13px;"></div>
-      <div id="sql-success" style="display:none; margin-top:12px; padding:10px; background:#e8f5e9; border-radius:7px; color:#2e7d32; font-size:13px;"></div>
-    </div>
-
-  </div>
-</div>
-
-<!-- Toast -->
 <div id="toast"></div>
 
-<!-- ═══════════════ SCRIPT ═════════════════════════════════════ -->
+<!-- Modal Ubah Password -->
+<div class="modal-backdrop" id="modal-ubah-password">
+  <div class="modal">
+    <h3>Ubah Password</h3>
+    <div class="field">
+      <label>Password Baru</label>
+      <input type="password" id="new-pass" placeholder="Minimal 4 karakter" />
+    </div>
+    <div class="field">
+      <label>Konfirmasi Password</label>
+      <input type="password" id="confirm-pass" placeholder="Ulangi password" />
+    </div>
+    <div class="modal-buttons">
+      <button class="btn-cancel" onclick="closeChangePasswordModal()">Batal</button>
+      <button class="btn-confirm" id="btn-confirm-pass" onclick="handleChangePassword()">Simpan</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Pembelian -->
+<div class="modal-backdrop" id="modal-backdrop">
+  <div class="modal">
+    <h3 id="modal-title">Beli</h3>
+    <p id="modal-desc">Lorem ipsum dolor sit amet.</p>
+    <img id="modal-qris" src="" alt="QRIS" style="display:none;" />
+    <div class="modal-buttons">
+      <button class="btn-cancel" id="modal-cancel">Batal</button>
+      <button class="btn-confirm" id="modal-confirm" disabled>Konfirmasi Pembayaran</button>
+    </div>
+  </div>
+</div>
+
 <script>
   const SUPABASE_URL = "https://lctdgwxvlekxachtnedp.supabase.co";
   const SUPABASE_KEY = "sb_publishable__gbp-AfNa2w4e2h0FUTLfw_18XhTUqJ";
+  const TELEGRAM_BOT_TOKEN = "YOUR_BOT_TOKEN";
+  const TELEGRAM_CHAT_ID = "YOUR_CHAT_ID";
 
-  // ─── SERVICE ROLE KEY ──────────────────────────────────────
-  const SUPABASE_SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxjdGRnd3h2bGVreGFjaHRuZWRwIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc4NDAyNDExNSwiZXhwIjoyMDk5NjAwMTE1fQ.JCT4XV-O-ddaIm7TRfY0SLy3dQyc2DJWN0W8_qqzXHA";
-
-  // ─── TELEGRAM ──────────────────────────────────────────────
-  const BOT_TOKEN = "8781465825:AAGs3cPsfpKASZSyaUIqL6GEjPxyGyWmM78";
-  const CHAT_ID   = "8479227096";
-
-  let lastEmailCountNotified = 0;
-
-  async function sendTelegramNotification(message) {
-    try {
-      const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
-      const resp = await fetch(url, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ chat_id: CHAT_ID, text: message, parse_mode: "HTML" })
-      });
-      if (!resp.ok) {
-        const err = await resp.text();
-        console.error("Telegram error:", err);
-      }
-    } catch (e) {
-      console.error("Gagal mengirim notifikasi Telegram:", e);
-    }
-  }
-
-  async function checkEmailCountAndNotify() {
-    try {
-      const data = await sbFetch(`emails?select=uid`, {}, true);
-      const count = data ? data.length : 0;
-      if (count === 3 && lastEmailCountNotified !== 3) {
-        await sendTelegramNotification(
-          `⚠️ <b>Email tinggal 3 buah!</b>\nSegera tambahkan email baru agar stok tidak habis.`
-        );
-        lastEmailCountNotified = 3;
-      } else if (count !== 3) {
-        lastEmailCountNotified = 0;
-      }
-      return count;
-    } catch (e) {
-      console.error("Gagal cek jumlah email:", e);
-      return 0;
-    }
-  }
-
-  // ── Konfigurasi ─────────────────────────────────────────────
-  const ADMIN_UID = 67676;
   let currentUser = null;
+  const mainCardOriginalParent = document.getElementById('main-card').parentNode;
 
-  // ── Supabase REST helper ────────────────────────────────────
-  async function sbFetch(path, options = {}, useService = false) {
-    const key = useService ? SUPABASE_SERVICE_KEY : SUPABASE_KEY;
+  async function sbFetch(path, options = {}) {
     const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
       ...options,
       headers: {
-        "apikey": key,
-        "Authorization": `Bearer ${key}`,
+        "apikey": SUPABASE_KEY,
+        "Authorization": `Bearer ${SUPABASE_KEY}`,
         "Content-Type": "application/json",
         "Prefer": options.prefer || "return=representation",
         ...(options.headers || {})
       }
     });
-
     const text = await res.text();
     let data = null;
     try { data = JSON.parse(text); } catch { data = text; }
-
     if (!res.ok) throw new Error(data?.message || data || `HTTP ${res.status}`);
     return data;
   }
 
-  // ── GMT+7 timestamp ─────────────────────────────────────────
   function nowGMT7() {
-    const now = new Date();
+    const d = new Date();
     const offset = 7 * 60 * 60 * 1000;
-    return new Date(now.getTime() + offset).toISOString().replace('Z', '+07:00');
+    return new Date(d.getTime() + offset).toISOString().replace('Z', '+07:00');
   }
 
-  // ── Random 5-digit UID ──────────────────────────────────────
-  function randomUID() {
-    return Math.floor(10000 + Math.random() * 90000);
+  function todayStartGMT7() {
+    const d = new Date();
+    const offset = 7 * 60;
+    const local = new Date(d.getTime() + offset * 60000);
+    const iso = local.toISOString().split('T')[0];
+    return new Date(iso + 'T00:00:00+07:00');
   }
 
-  // ── Toast ───────────────────────────────────────────────────
+  function formatDate(isoString) {
+    if (!isoString) return '-';
+    return new Date(isoString).toLocaleString('id-ID', { timeZone: 'Asia/Jakarta' });
+  }
+
   function showToast(msg, duration = 2200) {
     const t = document.getElementById('toast');
     t.textContent = msg;
@@ -784,13 +563,24 @@
     setTimeout(() => t.classList.remove('show'), duration);
   }
 
-  // ── Cooldown helpers ────────────────────────────────────────
-  function getCooldownMs(lastCreated) {
+  async function sendTelegram(text) {
+    if (TELEGRAM_BOT_TOKEN === 'YOUR_BOT_TOKEN') return;
+    try {
+      await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text })
+      });
+    } catch (e) { console.error('Telegram error:', e); }
+  }
+
+  function getCooldownMs(lastCreated, role) {
     if (!lastCreated) return 0;
+    if (role === 2) return 0;
     const last = new Date(lastCreated).getTime();
-    const now  = Date.now();
-    const elapsed = now - last;
-    const cooldown = 7 * 60 * 60 * 1000;
+    const elapsed = Date.now() - last;
+    const cooldownHours = (role === 1) ? 2 : 7;
+    const cooldown = cooldownHours * 60 * 60 * 1000;
     return Math.max(0, cooldown - elapsed);
   }
 
@@ -802,13 +592,11 @@
   }
 
   let cooldownInterval = null;
-
   function startCooldownTimer(remainingMs) {
     const info = document.getElementById('cooldown-info');
     const btn  = document.getElementById('btn-buat');
     btn.disabled = true;
     info.style.display = 'block';
-
     function tick() {
       if (remainingMs <= 0) {
         clearInterval(cooldownInterval);
@@ -819,18 +607,16 @@
       info.textContent = `⏳ Bisa buat lagi dalam ${formatCountdown(remainingMs)}`;
       remainingMs -= 1000;
     }
-
     tick();
     cooldownInterval = setInterval(tick, 1000);
   }
 
-  // ── LOGIN ────────────────────────────────────────────────────
+  // ═══════════════ LOGIN ══════════════════════════════════════
   async function handleLogin() {
     const username = document.getElementById('inp-username').value.trim();
     const password = document.getElementById('inp-password').value;
-    const errEl    = document.getElementById('login-error');
-    const btn      = document.getElementById('btn-login');
-
+    const errEl = document.getElementById('login-error');
+    const btn = document.getElementById('btn-login');
     errEl.style.display = 'none';
 
     if (!username || !password) {
@@ -844,27 +630,31 @@
 
     try {
       const rows = await sbFetch(
-        `users?username=eq.${encodeURIComponent(username)}&password=eq.${encodeURIComponent(password)}&limit=1`,
-        { prefer: 'return=representation' }
+        `users?username=eq.${encodeURIComponent(username)}&password=eq.${encodeURIComponent(password)}&limit=1`
       );
 
-      if (!rows || rows.length === 0) {
-        throw new Error('Username atau password salah.');
-      }
+      if (!rows || rows.length === 0) throw new Error('Username atau password salah.');
 
       const user = rows[0];
-      currentUser = { uid: user.uid, username: user.username, lastCreated: user.last_created };
 
-      if (user.uid === ADMIN_UID) {
-        await sendTelegramNotification(`🔐 <b>Admin login</b>\nUser: ${user.username} (UID: ${user.uid})`);
-        showAdminDashboard();
-      } else {
-        await sendTelegramNotification(`👤 <b>User login</b>\nUser: ${user.username} (UID: ${user.uid})`);
-        showUserApp();
+      if (user.end && new Date(user.end) < new Date()) {
+        sendTelegram(`Akun ${user.username} (UID:${user.uid}) telah berakhir dan dihapus otomatis.`);
+        await sbFetch(`users?uid=eq.${user.uid}`, { method: 'DELETE', prefer: 'return=minimal' });
+        throw new Error('Akun telah berakhir.');
       }
 
+      currentUser = {
+        uid: user.uid,
+        username: user.username,
+        role: user.role || 0,
+        added_by: user.added_by,
+        end: user.end,
+        lastCreated: user.last_created
+      };
+
+      showApp();
     } catch (err) {
-      errEl.textContent = err.message || 'Terjadi kesalahan, coba lagi.';
+      errEl.textContent = err.message || 'Terjadi kesalahan.';
       errEl.style.display = 'block';
     } finally {
       btn.disabled = false;
@@ -872,69 +662,82 @@
     }
   }
 
-  // Enter key pada login
   ['inp-username','inp-password'].forEach(id => {
     document.getElementById(id).addEventListener('keydown', e => {
       if (e.key === 'Enter') handleLogin();
     });
   });
 
-  // ── SHOW / HIDE SCREENS ──────────────────────────────────────
-  function showUserApp() {
+  // ═══════════════ UI PER ROLE ═══════════════════════════════
+  function showApp() {
     document.getElementById('login-screen').style.display = 'none';
-    document.getElementById('admin-screen').style.display = 'none';
-    const app = document.getElementById('app-screen');
-    app.style.display = 'flex';
-
+    document.getElementById('app-screen').style.display = 'flex';
     document.getElementById('user-chip').textContent = currentUser.username;
+    document.getElementById('fab-email').style.display = 'flex';
+    document.getElementById('fab-wa').style.display = 'flex';
+    document.getElementById('fab-email').href = `mailto:yorpedia.dev@gmail.com?subject=Bantuin - Pesan&body=UID: ${currentUser.uid}%0APesan: `;
 
-    const emailLink = document.getElementById('nav-email-link');
-    const subject = encodeURIComponent('Bantuin - Pesan');
-    const body = encodeURIComponent(`UID: ${currentUser.uid}\nPesan: `);
-    emailLink.href = `mailto:yorpedia.dev@gmail.com?subject=${subject}&body=${body}`;
-    emailLink.style.display = 'inline-flex';
-
-    const remaining = getCooldownMs(currentUser.lastCreated);
-    if (remaining > 0) {
-      startCooldownTimer(remaining);
-    }
+    const mainCard = document.getElementById('main-card');
+    const purchaseCard = document.getElementById('purchase-card');
+    const adminPanel = document.getElementById('admin-panel');
+    const ownerPanel = document.getElementById('owner-panel');
+    const btnNavUbah = document.getElementById('btn-nav-ubah');
+    const btnBeliMethod = document.getElementById('btn-beli-method');
+    const btnBeliAdmin = document.getElementById('btn-beli-admin');
 
     document.getElementById('result-box').style.display = 'none';
-  }
+    clearInterval(cooldownInterval);
+    document.getElementById('btn-buat').disabled = false;
+    document.getElementById('cooldown-info').style.display = 'none';
+    purchaseCard.style.display = 'none';
+    adminPanel.style.display = 'none';
+    ownerPanel.style.display = 'none';
 
-  function showAdminDashboard() {
-    document.getElementById('login-screen').style.display = 'none';
-    document.getElementById('app-screen').style.display = 'none';
-    const admin = document.getElementById('admin-screen');
-    admin.style.display = 'flex';
-    document.getElementById('admin-user-chip').textContent = currentUser.username;
-    document.getElementById('nav-email-link').style.display = 'none';
+    btnNavUbah.style.display = (currentUser.role === 2) ? 'none' : 'flex';
 
-    loadUsers();
-    loadEmails();
-    if (window._adminInterval) clearInterval(window._adminInterval);
-    window._adminInterval = setInterval(() => { loadUsers(); loadEmails(); }, 10000);
+    if (mainCard.parentNode !== mainCardOriginalParent) {
+      mainCardOriginalParent.appendChild(mainCard);
+    }
+
+    if (currentUser.role === 1) {
+      adminPanel.style.display = 'block';
+      loadAdminPanel();
+      purchaseCard.style.display = 'block';
+      btnBeliMethod.style.display = 'inline-block';
+      btnBeliAdmin.style.display = 'none';
+    } else if (currentUser.role === 2) {
+      ownerPanel.style.display = 'block';
+      loadOwnerDashboard();
+      document.getElementById('owner-email-placeholder').appendChild(mainCard);
+      purchaseCard.style.display = 'none';
+    } else {
+      purchaseCard.style.display = 'block';
+      btnBeliMethod.style.display = 'inline-block';
+      btnBeliAdmin.style.display = 'inline-block';
+    }
+
+    const remaining = getCooldownMs(currentUser.lastCreated, currentUser.role);
+    if (remaining > 0) startCooldownTimer(remaining);
   }
 
   function handleLogout() {
     currentUser = null;
     clearInterval(cooldownInterval);
-    if (window._adminInterval) clearInterval(window._adminInterval);
-
-    document.getElementById('app-screen').style.display  = 'none';
-    document.getElementById('admin-screen').style.display = 'none';
+    document.getElementById('app-screen').style.display = 'none';
     document.getElementById('login-screen').style.display = 'flex';
+    document.getElementById('fab-email').style.display = 'none';
+    document.getElementById('fab-wa').style.display = 'none';
     document.getElementById('inp-username').value = '';
     document.getElementById('inp-password').value = '';
-    document.getElementById('login-error').style.display  = 'none';
-    document.getElementById('result-box').style.display   = 'none';
-    document.getElementById('btn-buat').disabled = false;
-    document.getElementById('cooldown-info').style.display = 'none';
+    document.getElementById('login-error').style.display = 'none';
+    document.getElementById('result-box').style.display = 'none';
+
+    if (document.getElementById('main-card').parentNode !== mainCardOriginalParent) {
+      mainCardOriginalParent.appendChild(document.getElementById('main-card'));
+    }
   }
 
-  // ══════════════════════════════════════════════════════════════
-  // USER FUNCTIONS (Buat Email)
-  // ══════════════════════════════════════════════════════════════
+  // ═══════════════ BUAT EMAIL ═══════════════════════════════
   async function handleBuat() {
     const btn = document.getElementById('btn-buat');
     btn.disabled = true;
@@ -943,7 +746,7 @@
     try {
       const fresh = await sbFetch(`users?uid=eq.${currentUser.uid}&limit=1`);
       if (fresh && fresh[0]) {
-        const remaining = getCooldownMs(fresh[0].last_created);
+        const remaining = getCooldownMs(fresh[0].last_created, currentUser.role);
         if (remaining > 0) {
           startCooldownTimer(remaining);
           btn.innerHTML = 'Buat';
@@ -952,48 +755,44 @@
       }
 
       const emails = await sbFetch(`emails?select=uid,email&order=uid.asc&limit=1`);
-
       if (!emails || emails.length === 0) {
-        showToast('Tidak ada email tersedia saat ini. Coba lagi nanti.');
+        showToast('Tidak ada email tersedia.');
         btn.disabled = false;
         btn.innerHTML = 'Buat';
         return;
       }
 
       const emailRow = emails[0];
-      const email = emailRow.email;
-
       const ts = nowGMT7();
       await sbFetch(`users?uid=eq.${currentUser.uid}`, {
-        method: 'PATCH',
-        prefer: 'return=minimal',
-        body: JSON.stringify({ last_created: ts })
+        method: 'PATCH', prefer: 'return=minimal', body: JSON.stringify({ last_created: ts })
       });
-
       currentUser.lastCreated = ts;
 
-      await sbFetch(`emails?uid=eq.${emailRow.uid}`, {
-        method: 'DELETE',
-        prefer: 'return=minimal'
-      });
+      await sbFetch(`emails?uid=eq.${emailRow.uid}`, { method: 'DELETE', prefer: 'return=minimal' });
+      sendTelegram(`User ${currentUser.username} mengambil email: ${emailRow.email}`);
 
-      await sendTelegramNotification(
-        `📧 <b>User mengambil email</b>\nUser: ${currentUser.username} (UID: ${currentUser.uid})\nEmail: <code>${email}</code>`
-      );
+      try {
+        const countRes = await fetch(`${SUPABASE_URL}/rest/v1/emails?select=uid&limit=0`, {
+          headers: { "apikey": SUPABASE_KEY, "Authorization": `Bearer ${SUPABASE_KEY}`, "Prefer": "count=exact" }
+        });
+        const count = parseInt(countRes.headers.get('content-range')?.split('/')[1] || '0', 10);
+        if (count <= 3) sendTelegram(`Email tersisa ${count}.`);
+      } catch (e) {}
 
-      await checkEmailCountAndNotify();
-
-      const resultText =
-        `Email: ${email}\nVerifikasi: https://generator.email/${email}\n\nTutorial Login: https://bit.ly/3SQWAE3`;
-
+      const resultText = `Email: ${emailRow.email}\nVerifikasi: https://generator.email/${emailRow.email}\n\nTutorial Login: https://bit.ly/3SQWAE3`;
       document.getElementById('result-text').textContent = resultText;
       document.getElementById('result-box').style.display = 'block';
       document.getElementById('btn-copy').textContent = 'Salin';
       document.getElementById('btn-copy').classList.remove('copied');
 
-      startCooldownTimer(7 * 60 * 60 * 1000);
+      if (currentUser.role !== 2) {
+        const cd = (currentUser.role === 1) ? 2 * 60 * 60 * 1000 : 7 * 60 * 60 * 1000;
+        startCooldownTimer(cd);
+      } else {
+        btn.disabled = false;
+      }
       btn.innerHTML = 'Buat';
-
     } catch (err) {
       console.error(err);
       showToast('Error: ' + (err.message || 'Terjadi kesalahan.'));
@@ -1009,282 +808,288 @@
       btn.textContent = '✓ Tersalin';
       btn.classList.add('copied');
       showToast('Pesan berhasil disalin!');
-      setTimeout(() => {
-        btn.textContent = 'Salin';
-        btn.classList.remove('copied');
-      }, 2500);
+      setTimeout(() => { btn.textContent = 'Salin'; btn.classList.remove('copied'); }, 2500);
     }).catch(() => {
-      const ta = document.createElement('textarea');
-      ta.value = text;
-      document.body.appendChild(ta);
-      ta.select();
-      document.execCommand('copy');
-      document.body.removeChild(ta);
+      const ta = document.createElement('textarea'); ta.value = text;
+      document.body.appendChild(ta); ta.select();
+      document.execCommand('copy'); document.body.removeChild(ta);
       showToast('Pesan berhasil disalin!');
     });
   }
 
-  // ══════════════════════════════════════════════════════════════
-  // ADMIN FUNCTIONS
-  // ══════════════════════════════════════════════════════════════
-  async function loadUsers() {
-    try {
-      const data = await sbFetch(`users?select=*&order=uid.asc`, {}, true);
-      const tbody = document.getElementById('users-table-body');
-      const count = document.getElementById('user-count');
+  // ═══════════════ ADMIN PANEL ══════════════════════════════
+  async function loadAdminPanel() {
+    const adminUid = currentUser.uid;
+    const users = await sbFetch(`users?added_by=eq.${adminUid}&order=end.asc`);
+    const tbody = document.getElementById('admin-user-list');
+    tbody.innerHTML = '';
+    if (users && users.length > 0) {
+      users.forEach(u => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td>${u.username}</td><td>${formatDate(u.end)}</td><td>
+          <button class="btn-delete" onclick="deleteUser(${u.uid})" title="Hapus user">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+          </button></td>`;
+        tbody.appendChild(tr);
+      });
+    } else tbody.innerHTML = '<tr><td colspan="3" class="empty-msg">Belum ada user</td></tr>';
 
-      if (!data || data.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="5" class="empty-msg">Belum ada user.</td></tr>`;
-        count.textContent = '0';
-        return;
+    const adminData = await sbFetch(`users?uid=eq.${adminUid}&limit=1`);
+    if (adminData && adminData[0]) {
+      const adminEnd = adminData[0].end;
+      let sisaHari = '∞';
+      if (adminEnd) {
+        const now = new Date(), end = new Date(adminEnd);
+        if (end > now) sisaHari = Math.ceil((end - now) / (1000 * 60 * 60 * 24));
+        else sisaHari = 0;
       }
-
-      count.textContent = data.length;
-      tbody.innerHTML = data.map(u => `
-        <tr>
-          <td><code>${u.uid}</code></td>
-          <td><strong>${u.username}</strong></td>
-          <td>${u.password}</td>
-          <td>${u.last_created ? new Date(u.last_created).toLocaleString('id-ID') : '—'}</td>
-          <td style="text-align:right;">
-            ${u.uid !== ADMIN_UID ? `<button class="btn-danger btn-small" onclick="handleDeleteUser(${u.uid})">Hapus</button>` : '—'}
-          </td>
-        </tr>
-      `).join('');
-    } catch (err) {
-      console.error(err);
-      document.getElementById('users-table-body').innerHTML =
-        `<tr><td colspan="5" class="empty-msg">Gagal memuat users: ${err.message}</td></tr>`;
+      const limitOk = await checkAdminLimit(adminUid);
+      document.getElementById('admin-info').textContent = 
+        `Sisa hari akun: ${sisaHari} | Limit tambah: ${limitOk ? 'tersedia' : 'maks 3x/24 jam'}`;
     }
   }
 
-  async function loadEmails() {
-    try {
-      const data = await sbFetch(`emails?select=*&order=uid.asc`, {}, true);
-      const tbody = document.getElementById('emails-table-body');
-      const count = document.getElementById('email-count');
-
-      if (!data || data.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="3" class="empty-msg">Belum ada email.</td></tr>`;
-        count.textContent = '0';
-        return;
-      }
-
-      count.textContent = data.length;
-      tbody.innerHTML = data.map(e => `
-        <tr>
-          <td><code>${e.uid}</code></td>
-          <td>${e.email}</td>
-          <td style="text-align:right;">
-            <button class="btn-danger btn-small" onclick="handleDeleteEmail(${e.uid})">Hapus</button>
-          </td>
-        </tr>
-      `).join('');
-
-      await checkEmailCountAndNotify();
-
-    } catch (err) {
-      console.error(err);
-      document.getElementById('emails-table-body').innerHTML =
-        `<tr><td colspan="3" class="empty-msg">Gagal memuat emails: ${err.message}</td></tr>`;
-    }
+  async function checkAdminLimit(adminUid) {
+    const since = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+    const actions = await sbFetch(`admin_actions?admin_uid=eq.${adminUid}&action_time=gte.${since}`);
+    return (actions ? actions.length : 0) < 3;
   }
 
-  async function handleAddUser() {
+  async function addUser() {
+    const username = document.getElementById('new-username').value.trim();
+    const password = document.getElementById('new-password').value;
+    const days = parseInt(document.getElementById('new-days').value, 10);
+    if (!username || !password || days < 1) { showToast('Isi semua field.'); return; }
+
+    const adminData = await sbFetch(`users?uid=eq.${currentUser.uid}&limit=1`);
+    const adminEnd = adminData[0]?.end ? new Date(adminData[0].end) : null;
+
+    let userEnd;
+    if (days === 1) {
+      const nowWIB = new Date(new Date().getTime() + 7 * 60 * 60 * 1000);
+      userEnd = new Date(nowWIB.getTime() + 24 * 60 * 60 * 1000);
+    } else {
+      const start = todayStartGMT7();
+      userEnd = new Date(start.getTime() + days * 24 * 60 * 60 * 1000 + (6 * 60 + 59) * 60 * 1000);
+    }
+
+    if (adminEnd && userEnd > adminEnd) { showToast('Melebihi masa aktif Anda.'); return; }
+    if (!(await checkAdminLimit(currentUser.uid))) { showToast('Batas 3x/24 jam tercapai.'); return; }
+
+    const endISO = userEnd.toISOString().replace('Z', '+07:00');
+    try {
+      const newUid = Math.floor(10000 + Math.random() * 90000);
+      await sbFetch('users', { method: 'POST', body: JSON.stringify({
+        uid: newUid, username, password, role: 0, added_by: currentUser.uid, end: endISO, last_created: null
+      }) });
+      await sbFetch('admin_actions', { method: 'POST', body: JSON.stringify({
+        admin_uid: currentUser.uid, action_time: new Date().toISOString()
+      }) });
+      sendTelegram(`Admin ${currentUser.username} membuat user baru: ${username}`);
+      showToast('User ditambahkan!');
+      document.getElementById('new-username').value = '';
+      document.getElementById('new-password').value = '';
+      document.getElementById('new-days').value = '1';
+      loadAdminPanel();
+    } catch (err) { console.error(err); showToast('Gagal menambahkan user.'); }
+  }
+
+  async function deleteUser(uid) {
+    if (!confirm('Yakin ingin menghapus user ini?')) return;
+    try {
+      await sbFetch(`users?uid=eq.${uid}`, { method: 'DELETE', prefer: 'return=minimal' });
+      showToast('User berhasil dihapus.');
+      if (currentUser.role === 1) loadAdminPanel();
+      else if (currentUser.role === 2) loadOwnerDashboard();
+    } catch (err) { console.error(err); showToast('Gagal menghapus user.'); }
+  }
+
+  // ═══════════════ OWNER DASHBOARD ═════════════════════════
+  async function loadOwnerDashboard() { await loadOwnerUsers(); await loadOwnerEmails(); }
+
+  async function loadOwnerUsers() {
+    const users = await sbFetch(`users?order=role.desc,username.asc`);
+    const tbody = document.getElementById('owner-users-table-body');
+    tbody.innerHTML = '';
+    if (users && users.length > 0) {
+      users.forEach(u => {
+        const roleClass = u.role === 2 ? 'username-owner' : (u.role === 1 ? 'username-admin' : '');
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td>${u.uid}</td><td class="${roleClass}">${u.username}</td><td>${u.password || '-'}</td><td>${formatDate(u.end)}</td><td>
+          ${u.uid !== currentUser.uid ? `<button class="btn-delete" onclick="deleteUser(${u.uid})" title="Hapus user">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+          </button>` : ''}</td>`;
+        tbody.appendChild(tr);
+      });
+      document.getElementById('owner-user-count').textContent = users.length;
+    } else tbody.innerHTML = '<tr><td colspan="5" class="empty-msg">Tidak ada pengguna</td></tr>';
+  }
+
+  async function loadOwnerEmails() {
+    const emails = await sbFetch(`emails?order=uid.asc`);
+    const tbody = document.getElementById('owner-emails-table-body');
+    tbody.innerHTML = '';
+    if (emails && emails.length > 0) {
+      emails.forEach(e => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td>${e.uid}</td><td>${e.email}</td><td>
+          <button class="btn-delete" onclick="ownerDeleteEmail(${e.uid})" title="Hapus email">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+          </button></td>`;
+        tbody.appendChild(tr);
+      });
+      document.getElementById('owner-email-count').textContent = emails.length;
+    } else tbody.innerHTML = '<tr><td colspan="3" class="empty-msg">Belum ada email</td></tr>';
+  }
+
+  async function ownerAddUser() {
     const username = document.getElementById('add-user-username').value.trim();
     const password = document.getElementById('add-user-password').value.trim();
+    const role = parseInt(document.getElementById('add-user-role').value, 10);
+    const days = parseInt(document.getElementById('add-user-days').value, 10);
+    if (!username || !password || days < 1) { showToast('Isi semua field.'); return; }
 
-    if (!username || !password) {
-      showToast('Username dan password wajib diisi.');
-      return;
+    let userEnd;
+    if (days === 1) {
+      const nowWIB = new Date(new Date().getTime() + 7 * 60 * 60 * 1000);
+      userEnd = new Date(nowWIB.getTime() + 24 * 60 * 60 * 1000);
+    } else {
+      const start = todayStartGMT7();
+      userEnd = new Date(start.getTime() + days * 24 * 60 * 60 * 1000 + (6 * 60 + 59) * 60 * 1000);
     }
 
-    const uid = randomUID();
-
     try {
-      await sbFetch('users', {
-        method: 'POST',
-        body: JSON.stringify({ uid, username, password, last_created: null })
-      }, true);
-
+      const newUid = Math.floor(10000 + Math.random() * 90000);
+      await sbFetch('users', { method: 'POST', body: JSON.stringify({
+        uid: newUid, username, password, role, added_by: null, end: userEnd.toISOString().replace('Z', '+07:00'), last_created: null
+      }) });
+      showToast('User ditambahkan!');
       document.getElementById('add-user-username').value = '';
       document.getElementById('add-user-password').value = '';
-      showToast(`User ${username} berhasil ditambahkan (UID: ${uid})`);
-
-      await sendTelegramNotification(
-        `➕ <b>Admin menambah user</b>\nAdmin: ${currentUser.username} (UID: ${currentUser.uid})\nUser baru: ${username} (UID: ${uid})`
-      );
-
-      loadUsers();
-    } catch (err) {
-      showToast('Gagal tambah user: ' + err.message);
-    }
+      document.getElementById('add-user-days').value = '1';
+      loadOwnerUsers();
+    } catch (err) { console.error(err); showToast('Gagal menambahkan user.'); }
   }
 
-  async function handleDeleteUser(uid) {
-    if (!confirm(`Hapus user dengan UID ${uid}?`)) return;
-
-    try {
-      await sbFetch(`users?uid=eq.${uid}`, {
-        method: 'DELETE',
-        prefer: 'return=minimal'
-      }, true);
-      showToast(`User ${uid} berhasil dihapus.`);
-
-      await sendTelegramNotification(
-        `➖ <b>Admin menghapus user</b>\nAdmin: ${currentUser.username} (UID: ${currentUser.uid})\nUID user dihapus: ${uid}`
-      );
-
-      loadUsers();
-    } catch (err) {
-      showToast('Gagal hapus user: ' + err.message);
-    }
-  }
-
-  async function handleAddEmail() {
+  async function ownerAddEmail() {
     const email = document.getElementById('add-email-address').value.trim();
-
-    if (!email) {
-      showToast('Alamat email wajib diisi.');
-      return;
-    }
-
-    const uid = randomUID();
-
+    if (!email) { showToast('Masukkan email.'); return; }
     try {
-      await sbFetch('emails', {
-        method: 'POST',
-        body: JSON.stringify({ uid, email })
-      }, true);
-
+      let uid;
+      for (let i = 0; i < 20; i++) {
+        uid = Math.floor(10000 + Math.random() * 90000);
+        const existing = await sbFetch(`emails?uid=eq.${uid}&limit=1`);
+        if (!existing || existing.length === 0) break;
+        uid = null;
+      }
+      if (!uid) throw new Error('UID unik tidak tersedia.');
+      await sbFetch('emails', { method: 'POST', body: JSON.stringify({ uid, email }) });
+      showToast('Email ditambahkan!');
       document.getElementById('add-email-address').value = '';
-      showToast(`Email ${email} berhasil ditambahkan.`);
-
-      await sendTelegramNotification(
-        `📥 <b>Admin menambah email</b>\nAdmin: ${currentUser.username} (UID: ${currentUser.uid})\nEmail baru: <code>${email}</code> (UID: ${uid})`
-      );
-
-      lastEmailCountNotified = 0;
-      loadEmails();
-    } catch (err) {
-      showToast('Gagal tambah email: ' + err.message);
-    }
+      loadOwnerEmails();
+    } catch (err) { console.error(err); showToast('Gagal menambahkan email.'); }
   }
 
-  async function handleDeleteEmail(uid) {
-    if (!confirm(`Hapus email dengan UID ${uid}?`)) return;
-
-    try {
-      await sbFetch(`emails?uid=eq.${uid}`, {
-        method: 'DELETE',
-        prefer: 'return=minimal'
-      }, true);
-      showToast(`Email ${uid} berhasil dihapus.`);
-
-      await sendTelegramNotification(
-        `📤 <b>Admin menghapus email</b>\nAdmin: ${currentUser.username} (UID: ${currentUser.uid})\nUID email dihapus: ${uid}`
-      );
-
-      loadEmails();
-    } catch (err) {
-      showToast('Gagal hapus email: ' + err.message);
-    }
+  async function ownerDeleteEmail(uid) {
+    if (!confirm('Hapus email ini?')) return;
+    try { await sbFetch(`emails?uid=eq.${uid}`, { method: 'DELETE', prefer: 'return=minimal' }); showToast('Email dihapus.'); loadOwnerEmails(); }
+    catch (err) { console.error(err); showToast('Gagal menghapus email.'); }
   }
 
-  // ─── SQL EXECUTOR (SEMUA QUERY) ──────────────────────────────
-  async function handleRunQuery() {
-    const input = document.getElementById('sql-query-input');
-    const query = input.value.trim();
-    const errorEl = document.getElementById('sql-error');
-    const successEl = document.getElementById('sql-success');
+  async function ownerRunQuery() {
+    const query = document.getElementById('sql-query-input').value.trim();
+    if (!query) { showToast('Masukkan query.'); return; }
+    const danger = document.getElementById('sql-danger-mode').checked;
+    const lower = query.toLowerCase();
+    if (!danger && (lower.includes('insert')||lower.includes('update')||lower.includes('delete')||lower.includes('drop'))) {
+      showToast('Centang mode modifikasi.'); return;
+    }
     const resultArea = document.getElementById('sql-result-area');
-    const tHead = document.getElementById('sql-result-head');
-    const tBody = document.getElementById('sql-result-body');
-    const rowCount = document.getElementById('sql-row-count');
-    const dangerMode = document.getElementById('sql-danger-mode').checked;
-
-    resultArea.style.display = 'none';
-    errorEl.style.display = 'none';
-    successEl.style.display = 'none';
-    errorEl.textContent = '';
-    successEl.textContent = '';
-
-    if (!query) {
-      errorEl.textContent = 'Query tidak boleh kosong.';
-      errorEl.style.display = 'block';
-      return;
-    }
-
-    const isSelect = /^\s*select/i.test(query);
-
-    if (!isSelect && !dangerMode) {
-      errorEl.textContent = 'Query bukan SELECT. Centang "Izinkan query berbahaya" untuk menjalankannya.';
-      errorEl.style.display = 'block';
-      return;
-    }
-
-    if (!isSelect && dangerMode) {
-      const confirmMsg = `ANDA AKAN MENJALANKAN QUERY BERBAHAYA\nYakin ingin melanjutkan?`;
-      if (!confirm(confirmMsg)) {
-        return;
-      }
-    }
-
+    const errDiv = document.getElementById('sql-error');
+    const sucDiv = document.getElementById('sql-success');
+    resultArea.style.display = 'none'; errDiv.style.display = 'none'; sucDiv.style.display = 'none';
     try {
-      const result = await sbFetch('rpc/execute_sql', {
-        method: 'POST',
+      const response = await fetch(`${SUPABASE_URL}/rest/v1/rpc/exec_sql`, {
+        method: 'POST', headers: { "apikey": SUPABASE_KEY, "Authorization": `Bearer ${SUPABASE_KEY}`, "Content-Type": "application/json" },
         body: JSON.stringify({ query_text: query })
-      }, true);
-
-      if (Array.isArray(result)) {
-        if (result.length === 0) {
-          tHead.innerHTML = '';
-          tBody.innerHTML = '';
-          rowCount.textContent = 'Query berhasil, tetapi tidak ada data.';
-          resultArea.style.display = 'block';
-          return;
-        }
-
-        const headers = Object.keys(result[0]);
-        tHead.innerHTML = `<tr>${headers.map(h => `<th>${h}</th>`).join('')}</tr>`;
-        tBody.innerHTML = result.map(row => `
-          <tr>${headers.map(h => `<td>${row[h] !== null ? row[h] : 'null'}</td>`).join('')}</tr>
-        `).join('');
-
-        rowCount.textContent = `${result.length} baris ditemukan.`;
-        resultArea.style.display = 'block';
-
-      } else if (result && typeof result === 'object') {
-        if (result.status === 'success') {
-          let msg = `${result.message}`;
-          if (result.row_count !== undefined) {
-            msg += ` (${result.row_count} baris terpengaruh)`;
-          }
-          successEl.textContent = msg;
-          successEl.style.display = 'block';
-        } else if (result.status === 'error') {
-          errorEl.textContent = `Error: ${result.message}`;
-          errorEl.style.display = 'block';
-        } else {
-          successEl.textContent = 'Query berhasil dijalankan.';
-          successEl.style.display = 'block';
-        }
-      } else {
-        successEl.textContent = 'Query berhasil dijalankan (tidak ada data kembali).';
-        successEl.style.display = 'block';
-      }
-
-    } catch (err) {
-      console.error(err);
-      errorEl.textContent = `Error: ${err.message || 'Terjadi kesalahan.'}`;
-      errorEl.style.display = 'block';
-    }
+      });
+      if (!response.ok) throw new Error(await response.text());
+      const data = await response.json();
+      if (!data || data.length === 0) { sucDiv.textContent = 'Query berhasil (tidak ada hasil).'; sucDiv.style.display = 'block'; return; }
+      const first = data[0].result;
+      if (typeof first === 'object' && first.error) throw new Error(first.error);
+      if (typeof first === 'object' && first.status === 'ok') { sucDiv.textContent = 'Query berhasil.'; sucDiv.style.display = 'block'; return; }
+      const cols = Object.keys(first);
+      document.getElementById('sql-result-head').innerHTML = '<tr>' + cols.map(c => `<th>${c}</th>`).join('') + '</tr>';
+      document.getElementById('sql-result-body').innerHTML = data.map(item => {
+        const row = item.result;
+        return '<tr>' + cols.map(c => `<td>${row[c] ?? ''}</td>`).join('') + '</tr>';
+      }).join('');
+      document.getElementById('sql-row-count').textContent = `${data.length} baris`;
+      resultArea.style.display = 'block';
+    } catch (err) { console.error(err); errDiv.textContent = err.message; errDiv.style.display = 'block'; }
   }
 
-  // ── INIT ──────────────────────────────────────────────────────
-  document.getElementById('app-screen').style.display = 'none';
-  document.getElementById('admin-screen').style.display = 'none';
-  document.getElementById('nav-email-link').style.display = 'none';
+  // ═══════════════ UBAH PASSWORD ═══════════════════════════
+  function showChangePasswordModal() {
+    if (currentUser.role === 2) { showToast('Owner tidak bisa ubah password di sini.'); return; }
+    document.getElementById('new-pass').value = '';
+    document.getElementById('confirm-pass').value = '';
+    document.getElementById('modal-ubah-password').style.display = 'flex';
+  }
+  function closeChangePasswordModal() { document.getElementById('modal-ubah-password').style.display = 'none'; }
+  async function handleChangePassword() {
+    const newPass = document.getElementById('new-pass').value.trim();
+    const confirmPass = document.getElementById('confirm-pass').value.trim();
+    if (!newPass || newPass.length < 4) { showToast('Minimal 4 karakter.'); return; }
+    if (newPass !== confirmPass) { showToast('Konfirmasi tidak cocok.'); return; }
+    try {
+      await sbFetch(`users?uid=eq.${currentUser.uid}`, { method: 'PATCH', prefer: 'return=minimal', body: JSON.stringify({ password: newPass }) });
+      sendTelegram(`User ${currentUser.username} berhasil mengubah password.`);
+      showToast('Password berhasil diubah!');
+      closeChangePasswordModal();
+    } catch (err) { console.error(err); showToast('Gagal mengubah password.'); }
+  }
+
+  // ═══════════════ MODAL PEMBELIAN ═════════════════════════
+  let purchaseType = null, confirmTimeout = null;
+  function openPurchaseModal(type) {
+    purchaseType = type;
+    const modal = document.getElementById('modal-backdrop');
+    const title = document.getElementById('modal-title');
+    const desc = document.getElementById('modal-desc');
+    const qrisImg = document.getElementById('modal-qris');
+    const confirmBtn = document.getElementById('modal-confirm');
+    if (type === 'method') {
+      title.textContent = 'Beli Method';
+      desc.textContent = 'Diajarkan cara create tanpa limit, tanpa jeda, tanpa vpn sepuasnya.';
+      qrisImg.src = 'qris-method.webp';
+    } else {
+      title.textContent = 'Beli Admin';
+      desc.textContent = 'Dapat membuat user baru. Jeda create menjadi 2 jam.';
+      qrisImg.src = 'qris-admin.webp';
+    }
+    qrisImg.style.display = 'block';
+    confirmBtn.disabled = true; confirmBtn.textContent = 'Konfirmasi Pembayaran';
+    modal.style.display = 'flex';
+    sendTelegram(`User ${currentUser.username} (UID:${currentUser.uid}) ingin membeli ${type}.`);
+    if (confirmTimeout) clearTimeout(confirmTimeout);
+    confirmTimeout = setTimeout(() => { confirmBtn.disabled = false; }, 50000);
+  }
+  function closePurchaseModal() { document.getElementById('modal-backdrop').style.display = 'none'; if (confirmTimeout) clearTimeout(confirmTimeout); purchaseType = null; }
+  document.getElementById('modal-cancel').addEventListener('click', closePurchaseModal);
+  document.getElementById('modal-confirm').addEventListener('click', () => {
+    if (!purchaseType) return;
+    showToast('Permintaan Anda sedang ditinjau!');
+    sendTelegram(`User ${currentUser.username} mengkonfirmasi pembayaran ${purchaseType}.`);
+    setTimeout(closePurchaseModal, 4000);
+  });
+
+  function beliMethod() { openPurchaseModal('method'); }
+  function beliAdmin() {
+    if (currentUser.role !== 0) { showToast('Hanya user biasa yang bisa membeli admin.'); return; }
+    openPurchaseModal('admin');
+  }
 </script>
 
 </body>
