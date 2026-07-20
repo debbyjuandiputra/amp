@@ -184,12 +184,6 @@
       border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 13px;
     }
     .btn-secondary:hover { background: var(--red-dark); }
-    .btn-gray {
-      padding: 8px 14px; background: var(--gray-100); color: var(--text);
-      border: 1px solid var(--gray-300); border-radius: 8px;
-      font-size: 13px; cursor: pointer;
-    }
-    .btn-gray:hover { background: var(--gray-300); }
 
     .table-wrap { overflow-x: auto; }
     table {
@@ -285,7 +279,6 @@
 </head>
 <body>
 
-<!-- ═══════════════ LOGIN ═══════════════════════════════════════ -->
 <div id="login-screen">
   <div class="login-card">
     <div class="login-logo"><h1>AMP</h1></div>
@@ -303,7 +296,6 @@
   </div>
 </div>
 
-<!-- ═══════════════ APP ════════════════════════════════════════ -->
 <div id="app-screen">
   <div class="topbar">
     <div class="topbar-left">
@@ -322,7 +314,6 @@
   </div>
 
   <div class="app-body">
-    <!-- Card Buat Email -->
     <div class="main-card" id="main-card">
       <h2>Alight Motion</h2>
       <button class="btn-buat" id="btn-buat" onclick="handleBuat()">Buat</button>
@@ -335,14 +326,12 @@
       </div>
     </div>
 
-    <!-- Card Pembelian -->
     <div class="purchase-card" id="purchase-card" style="display:none;">
       <h3>Pembelian</h3>
       <button class="btn-small" id="btn-beli-method" onclick="beliMethod()">Beli Method</button>
       <button class="btn-small" id="btn-beli-admin" onclick="beliAdmin()">Beli Admin</button>
     </div>
 
-    <!-- Admin Panel (role=1) -->
     <div class="panel" id="admin-panel" style="display:none;">
       <h2>Admin Panel</h2>
       <div class="admin-info" id="admin-info">Sisa hari : ... | Limit tambah : 3/24 jam</div>
@@ -358,105 +347,61 @@
       </div>
     </div>
 
-    <!-- Owner Panel (role=2) -->
     <div class="panel" id="owner-panel" style="display:none;">
-      <!-- USERS -->
       <div class="card">
         <div class="card-header">
           <h3>Users <span class="badge" id="owner-user-count">0</span></h3>
         </div>
         <div class="form-row" style="margin-bottom:18px;">
-          <div class="field">
-            <label>Username</label>
-            <input type="text" id="add-user-username" placeholder="username" />
-          </div>
-          <div class="field">
-            <label>Password</label>
-            <input type="text" id="add-user-password" placeholder="password" />
-          </div>
+          <div class="field"><label>Username</label><input type="text" id="add-user-username" placeholder="username" /></div>
+          <div class="field"><label>Password</label><input type="text" id="add-user-password" placeholder="password" /></div>
           <div class="field">
             <label>Role</label>
-            <select id="add-user-role">
-              <option value="0">Biasa</option>
-              <option value="1">Admin</option>
-              <option value="2">Owner</option>
-            </select>
+            <select id="add-user-role"><option value="0">Biasa</option><option value="1">Admin</option><option value="2">Owner</option></select>
           </div>
-          <div class="field">
-            <label>Hari</label>
-            <input type="number" id="add-user-days" min="1" value="1" style="width:70px;" />
-          </div>
+          <div class="field"><label>Hari</label><input type="number" id="add-user-days" min="1" value="1" style="width:70px;" /></div>
           <button class="btn-secondary" onclick="ownerAddUser()">+</button>
         </div>
         <div class="table-wrap">
           <table>
-            <thead>
-              <tr>
-                <th>UID</th>
-                <th>Username</th>
-                <th>Password</th>
-                <th>Berakhir</th>
-                <th>Hapus</th>
-              </tr>
-            </thead>
-            <tbody id="owner-users-table-body">
-              <tr><td colspan="5" class="empty-msg">Memuat data…</td></tr>
-            </tbody>
+            <thead><tr><th>UID</th><th>Username</th><th>Password</th><th>Berakhir</th><th>Hapus</th></tr></thead>
+            <tbody id="owner-users-table-body"><tr><td colspan="5" class="empty-msg">Memuat data…</td></tr></tbody>
           </table>
         </div>
       </div>
 
-      <!-- EMAILS -->
       <div class="card">
         <div class="card-header">
           <h3>Emails <span class="badge" id="owner-email-count">0</span></h3>
         </div>
         <div class="form-row" style="margin-bottom:18px;">
-          <div class="field">
-            <label>Alamat Email</label>
-            <input type="text" id="add-email-address" placeholder="user@example.com" />
-          </div>
+          <div class="field"><label>Alamat Email</label><input type="text" id="add-email-address" placeholder="user@example.com" /></div>
           <button class="btn-secondary" onclick="ownerAddEmail()">+</button>
         </div>
         <div class="table-wrap">
           <table>
-            <thead>
-              <tr>
-                <th>UID</th>
-                <th>Email</th>
-                <th>Hapus</th>
-              </tr>
-            </thead>
-            <tbody id="owner-emails-table-body">
-              <tr><td colspan="3" class="empty-msg">Memuat data…</td></tr>
-            </tbody>
+            <thead><tr><th>UID</th><th>Email</th><th>Hapus</th></tr></thead>
+            <tbody id="owner-emails-table-body"><tr><td colspan="3" class="empty-msg">Memuat data…</td></tr></tbody>
           </table>
         </div>
       </div>
 
-      <!-- SQL EXECUTOR -->
       <div class="card">
-        <div class="card-header">
-          <h3>SQL Executor</h3>
-        </div>
+        <div class="card-header"><h3>SQL Executor</h3></div>
         <div class="form-row" style="flex-direction:column; align-items:stretch;">
           <div class="field" style="flex:1;">
             <label>Query SQL</label>
             <textarea id="sql-query-input" rows="4" style="width:100%; padding:10px; border:1.5px solid var(--gray-300); border-radius:7px; font-family:monospace; font-size:13px; resize:vertical;"></textarea>
           </div>
           <div style="display:flex; gap:16px; margin-top:8px; flex-wrap:wrap; align-items:center;">
-            <button class="btn-secondary" onclick="ownerRunQuery()">▶ Run Query</button>
+            <button class="btn-secondary" onclick="ownerRunQuery()">Run</button>
             <label style="display:flex; align-items:center; gap:6px; font-size:13px; cursor:pointer; color:var(--text-soft);">
-              <input type="checkbox" id="sql-danger-mode" />
-              (INSERT,UPDATE,DELETE,DROP)
+              <input type="checkbox" id="sql-danger-mode" /> Advanced
             </label>
           </div>
         </div>
         <div id="sql-result-area" style="display:none; margin-top:16px; overflow-x:auto;">
-          <table id="sql-result-table">
-            <thead id="sql-result-head"></thead>
-            <tbody id="sql-result-body"></tbody>
-          </table>
+          <table id="sql-result-table"><thead id="sql-result-head"></thead><tbody id="sql-result-body"></tbody></table>
           <div style="margin-top:10px; font-size:12px; color:var(--gray-500);" id="sql-row-count"></div>
         </div>
         <div id="sql-error" style="display:none; margin-top:12px; padding:10px; background:#fdecea; border-radius:7px; color:var(--red-dark); font-size:13px;"></div>
@@ -468,7 +413,6 @@
   </div>
 </div>
 
-<!-- Floating buttons -->
 <a class="fab-wa" id="fab-wa" href="https://wa.me/6288287091943" target="_blank" title="WhatsApp">
   <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
 </a>
@@ -478,18 +422,11 @@
 
 <div id="toast"></div>
 
-<!-- Modal Ubah Password -->
 <div class="modal-backdrop" id="modal-ubah-password">
   <div class="modal">
     <h3>Ubah Password</h3>
-    <div class="field">
-      <label>Password Baru</label>
-      <input type="password" id="new-pass" placeholder="Minimal 4 karakter" />
-    </div>
-    <div class="field">
-      <label>Konfirmasi Password</label>
-      <input type="password" id="confirm-pass" placeholder="Ulangi password" />
-    </div>
+    <div class="field"><label>Password Baru</label><input type="password" id="new-pass" placeholder="Minimal 4 karakter" /></div>
+    <div class="field"><label>Konfirmasi Password</label><input type="password" id="confirm-pass" placeholder="Ulangi password" /></div>
     <div class="modal-buttons">
       <button class="btn-cancel" onclick="closeChangePasswordModal()">Batal</button>
       <button class="btn-confirm" id="btn-confirm-pass" onclick="handleChangePassword()">Simpan</button>
@@ -497,7 +434,6 @@
   </div>
 </div>
 
-<!-- Modal Pembelian -->
 <div class="modal-backdrop" id="modal-backdrop">
   <div class="modal">
     <h3 id="modal-title">Beli</h3>
@@ -537,23 +473,120 @@
     return data;
   }
 
-  function nowGMT7() {
-    const d = new Date();
-    const offset = 7 * 60 * 60 * 1000;
-    return new Date(d.getTime() + offset).toISOString().replace('Z', '+07:00');
+  // ═══════════════ WAKTU ═════════════════════════════════════
+  // Strategi: simpan ke Supabase dalam UTC murni (toISOString()),
+  // tampilkan ke user dikonversi ke WIB (GMT+7) via Intl.
+
+  // Kembalikan UTC ISO string untuk disimpan ke Supabase
+  function nowUTC() {
+    return new Date().toISOString(); // e.g. "2026-07-20T10:45:00.000Z"
   }
 
-  function todayStartGMT7() {
-    const d = new Date();
-    const offset = 7 * 60;
-    const local = new Date(d.getTime() + offset * 60000);
-    const iso = local.toISOString().split('T')[0];
-    return new Date(iso + 'T00:00:00+07:00');
-  }
-
+  // Konversi sembarang ISO string (UTC atau offset apapun) → tampilan WIB
   function formatDate(isoString) {
     if (!isoString) return '-';
-    return new Date(isoString).toLocaleString('id-ID', { timeZone: 'Asia/Jakarta' });
+    try {
+      const d = new Date(isoString);
+      if (isNaN(d)) return isoString;
+      // Format: YYYY-MM-DD HH:mm:ss dalam Asia/Jakarta
+      const parts = new Intl.DateTimeFormat('en-CA', {
+        timeZone: 'Asia/Jakarta',
+        year: 'numeric', month: '2-digit', day: '2-digit',
+        hour: '2-digit', minute: '2-digit', second: '2-digit',
+        hour12: false
+      }).formatToParts(d);
+      const get = (t) => parts.find(p => p.type === t)?.value ?? '00';
+      return `${get('year')}-${get('month')}-${get('day')} ${get('hour')}:${get('minute')}:${get('second')}`;
+    } catch (e) {
+      return isoString;
+    }
+  }
+
+  // Hitung waktu akhir akun dalam UTC, berdasarkan logika hari WIB
+  function calculateEndTime(days) {
+    const WIB_OFFSET = 7 * 60 * 60 * 1000; // ms
+    const nowUTCms = Date.now();
+    const nowWIBms = nowUTCms + WIB_OFFSET;
+
+    if (days === 1) {
+      // Tepat 24 jam dari sekarang
+      return new Date(nowUTCms + 24 * 60 * 60 * 1000).toISOString();
+    } else {
+      // Hari ke-N pukul 23:59 WIB
+      // Hitung tengah malam WIB hari ini, lalu tambah N hari
+      const wibMidnight = nowWIBms - (nowWIBms % (24 * 60 * 60 * 1000));
+      const endWIBms = wibMidnight + days * 24 * 60 * 60 * 1000 - 60 * 1000; // 23:59 WIB
+
+      // Jika sisa waktu dari sekarang <= 8 jam, mundurkan ke 07:00 WIB keesokan harinya
+      const diffMs = endWIBms - nowWIBms;
+      if (diffMs <= 8 * 60 * 60 * 1000) {
+        const tomorrowWIBms = wibMidnight + (days + 1) * 24 * 60 * 60 * 1000 + 7 * 60 * 60 * 1000;
+        return new Date(tomorrowWIBms - WIB_OFFSET).toISOString();
+      }
+
+      return new Date(endWIBms - WIB_OFFSET).toISOString();
+    }
+  }
+
+  // ═══════════════ AUTO EXPIRE WATCHER ══════════════════════
+  // Mengecek berkala kolom "end" pada tabel users. Jika waktu saat ini
+  // (WIB) sudah melewati/menyamai "end", user tsb dihapus otomatis
+  // dan notifikasi dikirim ke Telegram.
+  //
+  // CATATAN: karena ini adalah aplikasi statis (client-side), pengecekan
+  // ini hanya berjalan SELAMA halaman ini terbuka di suatu browser
+  // (mis. dibuka owner/admin, atau tab yang idle). Ini BUKAN cron job
+  // server-side. Agar benar-benar berjalan 24/7 tanpa tergantung ada
+  // yang membuka halaman, sebaiknya buat Supabase Edge Function +
+  // pg_cron terjadwal yang menjalankan query & kirim notifikasi
+  // Telegram dari sisi server.
+  const EXPIRE_CHECK_INTERVAL_MS = 60 * 1000; // cek tiap 60 detik
+  let expireCheckInterval = null;
+  let expireCheckRunning = false;
+
+  async function checkExpiredUsersAndDelete() {
+    if (expireCheckRunning) return; // hindari overlap jika request sebelumnya belum selesai
+    expireCheckRunning = true;
+    try {
+      // Gunakan waktu UTC absolut untuk filter — timestamptz di Postgres
+      // membandingkan instant absolut, jadi tetap akurat terhadap
+      // timestamp yang disimpan dengan offset +07:00.
+      const nowUTC = new Date().toISOString();
+      const expired = await sbFetch(`users?end=not.is.null&end=lte.${nowUTC}`);
+
+      if (!expired || expired.length === 0) return;
+
+      for (const u of expired) {
+        try {
+          await sbFetch(`users?uid=eq.${u.uid}`, { method: 'DELETE', prefer: 'return=minimal' });
+          sendTelegram(`User ${u.username} telah berakhir dan dihapus`);
+
+          // Jika user yang sedang login adalah user yang baru dihapus, paksa logout
+          if (currentUser && currentUser.uid === u.uid) {
+            showToast('Akun Anda telah berakhir dan dihapus.');
+            handleLogout();
+          }
+        } catch (delErr) {
+          console.error('Gagal menghapus user expired:', u.uid, delErr);
+        }
+      }
+
+      // Refresh tampilan panel yang relevan jika sedang terbuka
+      if (currentUser) {
+        if (currentUser.role === 1) loadAdminPanel();
+        else if (currentUser.role === 2) { loadOwnerUsers(); }
+      }
+    } catch (err) {
+      console.error('Cek user expired gagal:', err);
+    } finally {
+      expireCheckRunning = false;
+    }
+  }
+
+  function startExpireWatcher() {
+    checkExpiredUsersAndDelete(); // jalankan sekali segera saat halaman dibuka
+    if (expireCheckInterval) clearInterval(expireCheckInterval);
+    expireCheckInterval = setInterval(checkExpiredUsersAndDelete, EXPIRE_CHECK_INTERVAL_MS);
   }
 
   function showToast(msg, duration = 2200) {
@@ -577,6 +610,7 @@
   function getCooldownMs(lastCreated, role) {
     if (!lastCreated) return 0;
     if (role === 2) return 0;
+    // lastCreated sudah dalam format WIB, konversi ke UTC untuk perbandingan
     const last = new Date(lastCreated).getTime();
     const elapsed = Date.now() - last;
     const cooldownHours = (role === 1) ? 2 : 7;
@@ -763,7 +797,7 @@
       }
 
       const emailRow = emails[0];
-      const ts = nowGMT7();
+      const ts = nowUTC(); 
       await sbFetch(`users?uid=eq.${currentUser.uid}`, {
         method: 'PATCH', prefer: 'return=minimal', body: JSON.stringify({ last_created: ts })
       });
@@ -864,26 +898,18 @@
     const adminData = await sbFetch(`users?uid=eq.${currentUser.uid}&limit=1`);
     const adminEnd = adminData[0]?.end ? new Date(adminData[0].end) : null;
 
-    let userEnd;
-    if (days === 1) {
-      const nowWIB = new Date(new Date().getTime() + 7 * 60 * 60 * 1000);
-      userEnd = new Date(nowWIB.getTime() + 24 * 60 * 60 * 1000);
-    } else {
-      const start = todayStartGMT7();
-      userEnd = new Date(start.getTime() + days * 24 * 60 * 60 * 1000 + (6 * 60 + 59) * 60 * 1000);
-    }
+    const endISO = calculateEndTime(days); 
 
-    if (adminEnd && userEnd > adminEnd) { showToast('Melebihi masa aktif Anda.'); return; }
+    if (adminEnd && new Date(endISO) > adminEnd) { showToast('Melebihi masa aktif Anda.'); return; }
     if (!(await checkAdminLimit(currentUser.uid))) { showToast('Batas 3x/24 jam tercapai.'); return; }
 
-    const endISO = userEnd.toISOString().replace('Z', '+07:00');
     try {
       const newUid = Math.floor(10000 + Math.random() * 90000);
       await sbFetch('users', { method: 'POST', body: JSON.stringify({
         uid: newUid, username, password, role: 0, added_by: currentUser.uid, end: endISO, last_created: null
       }) });
       await sbFetch('admin_actions', { method: 'POST', body: JSON.stringify({
-        admin_uid: currentUser.uid, action_time: new Date().toISOString()
+        admin_uid: currentUser.uid, action_time: nowUTC()
       }) });
       sendTelegram(`Admin ${currentUser.username} membuat user baru: ${username}`);
       showToast('User ditambahkan!');
@@ -949,19 +975,12 @@
     const days = parseInt(document.getElementById('add-user-days').value, 10);
     if (!username || !password || days < 1) { showToast('Isi semua field.'); return; }
 
-    let userEnd;
-    if (days === 1) {
-      const nowWIB = new Date(new Date().getTime() + 7 * 60 * 60 * 1000);
-      userEnd = new Date(nowWIB.getTime() + 24 * 60 * 60 * 1000);
-    } else {
-      const start = todayStartGMT7();
-      userEnd = new Date(start.getTime() + days * 24 * 60 * 60 * 1000 + (6 * 60 + 59) * 60 * 1000);
-    }
+    const endISO = calculateEndTime(days); 
 
     try {
       const newUid = Math.floor(10000 + Math.random() * 90000);
       await sbFetch('users', { method: 'POST', body: JSON.stringify({
-        uid: newUid, username, password, role, added_by: null, end: userEnd.toISOString().replace('Z', '+07:00'), last_created: null
+        uid: newUid, username, password, role, added_by: null, end: endISO, last_created: null
       }) });
       showToast('User ditambahkan!');
       document.getElementById('add-user-username').value = '';
@@ -1002,7 +1021,7 @@
     const danger = document.getElementById('sql-danger-mode').checked;
     const lower = query.toLowerCase();
     if (!danger && (lower.includes('insert')||lower.includes('update')||lower.includes('delete')||lower.includes('drop'))) {
-      showToast('Centang mode modifikasi.'); return;
+      showToast('Centang mode Advanced'); return;
     }
     const resultArea = document.getElementById('sql-result-area');
     const errDiv = document.getElementById('sql-error');
@@ -1072,7 +1091,7 @@
     qrisImg.style.display = 'block';
     confirmBtn.disabled = true; confirmBtn.textContent = 'Konfirmasi Pembayaran';
     modal.style.display = 'flex';
-    // sendTelegram(`User ${currentUser.username} ingin membeli ${type}.`);
+    sendTelegram(`User ${currentUser.username} (UID:${currentUser.uid}) ingin membeli ${type}.`);
     if (confirmTimeout) clearTimeout(confirmTimeout);
     confirmTimeout = setTimeout(() => { confirmBtn.disabled = false; }, 50000);
   }
@@ -1090,6 +1109,11 @@
     if (currentUser.role !== 0) { showToast('Hanya user biasa yang bisa membeli admin.'); return; }
     openPurchaseModal('admin');
   }
+
+  // ═══════════════ INIT ═════════════════════════════════════
+  // Mulai watcher expired-user segera saat halaman dimuat, terlepas
+  // dari apakah ada yang login atau belum.
+  startExpireWatcher();
 </script>
 
 </body>
