@@ -1091,7 +1091,7 @@
     qrisImg.style.display = 'block';
     confirmBtn.disabled = true; confirmBtn.textContent = 'Konfirmasi Pembayaran';
     modal.style.display = 'flex';
-    sendTelegram(`User ${currentUser.username} (UID:${currentUser.uid}) ingin membeli ${type}.`);
+    // sendTelegram(`User ${currentUser.username} (UID:${currentUser.uid}) ingin membeli ${type}.`);
     if (confirmTimeout) clearTimeout(confirmTimeout);
     confirmTimeout = setTimeout(() => { confirmBtn.disabled = false; }, 50000);
   }
